@@ -87,6 +87,99 @@
   #gameRoot > .hud + .card,#gameRoot > .swipe-stage-full,#gameRoot .choice-chip,
   .modal.show,.modal.show .card{animation:none!important}
 }
+/* ===== In-Game QR Scanner (#unlockModal) ===== */
+.qr-tools{margin:0 0 12px}
+.qr-btn-row{display:flex;gap:8px;margin-bottom:8px}
+.qr-btn-row .btn{flex:1;min-height:42px;padding:8px 10px;font-size:.88rem}
+.qr-scan-wrap{display:none;position:relative;width:100%;max-width:260px;aspect-ratio:1/1;margin:0 auto 8px;border-radius:16px;overflow:hidden;background:#061b2e;border:3px solid var(--aqua);box-shadow:0 8px 20px rgba(6,42,74,.28)}
+.qr-scan-wrap.on{display:block}
+.qr-scan-wrap video{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
+.qr-reticle{position:absolute;inset:16%;border:2.5px dashed rgba(255,255,255,.85);border-radius:14px;pointer-events:none;box-shadow:0 0 0 999px rgba(6,27,46,.32)}
+.qr-status{font-size:.82rem;color:var(--ocean);min-height:18px;margin:0 0 8px;font-weight:600}
+.qr-or-lbl{font-size:.8rem;color:var(--muted);margin:4px 0 6px;display:flex;align-items:center;gap:8px}
+.qr-or-lbl::before,.qr-or-lbl::after{content:"";flex:1;height:1px;background:#d2e6f2}
+
+/* ===== Phase Upgrade (Items 1, 2, 4): Touch Targets, Low-Light Contrast & Living Motion ===== */
+/* 1. Touch & Responsive Safety */
+.btn,.choice-chip,.s45-seg button,.fb-star{touch-action:manipulation}
+#hudPauseBtn,#hudExitBtn,#s2HintBtn{min-height:38px!important;padding:6px 12px!important;font-size:.86rem!important}
+.choice-chip{min-height:52px}
+.stage{min-height:74px}
+.fact,.fact-item,.stage h3,.stage small,.card p{overflow-wrap:break-word;word-break:break-word}
+.modal .card{padding-bottom:calc(18px + env(safe-area-inset-bottom, 0px))}
+
+/* 2. Aquarium Low-Light Readability & Contrast */
+:root{--muted:#445c70;--txt:#152c3f}
+.stage.locked{opacity:.88}
+.stage.locked .badge{background:#dce6ee;color:#395062}
+.fact{background:#e7f4fa;border-left-width:6px;color:#152c3f}
+.fact-item{background:#eef8f2;border-left-width:5px;padding:11px 13px;box-shadow:0 2px 6px rgba(15,45,65,.06)}
+.fact-item.wrong{background:#fdf0f2}
+.fact-item b{font-size:.98rem;margin-bottom:3px}
+.pdpa-note{color:#3d5568;background:#e9f4fa}
+
+/* 4. Living Idle Motion (Mascot Waka & Marine Life) */
+@keyframes wakaBreathe{
+  0%,100%{transform:translateY(0) scale(1,1) rotate(-1.2deg)}
+  50%{transform:translateY(-6px) scale(1.025,.98) rotate(1.2deg)}
+}
+@keyframes wakaBlink{
+  0%,45%,49%,92%,96%,100%{filter:drop-shadow(0 4px 8px rgba(0,25,45,.22)) brightness(1)}
+  47%,94%{filter:drop-shadow(0 4px 8px rgba(0,25,45,.22)) brightness(.92)}
+}
+.waka:not(.shake){animation:wakaBreathe 3.8s ease-in-out infinite,wakaBlink 6.5s ease-in-out infinite}
+@keyframes mapIconSwim{
+  0%,100%{transform:translateY(0) rotate(-2deg)}
+  50%{transform:translateY(-4px) rotate(2.5deg)}
+}
+#viewMap #stageList .stage:not(.locked) .ic img{animation:mapIconSwim 3.4s ease-in-out infinite}
+#viewMap #stageList .stage:nth-child(2) .ic img{animation-delay:-.6s}
+#viewMap #stageList .stage:nth-child(3) .ic img{animation-delay:-1.2s}
+#viewMap #stageList .stage:nth-child(4) .ic img{animation-delay:-1.8s}
+#viewMap #stageList .stage:nth-child(5) .ic img{animation-delay:-2.4s}
+#viewMap #stageList .stage:nth-child(6) .ic img{animation-delay:-3.0s}
+#viewMap #stageList .stage:nth-child(7) .ic img{animation-delay:-.9s}
+
+@media (prefers-reduced-motion:reduce){
+  .waka:not(.shake),#viewMap #stageList .stage:not(.locked) .ic img{animation:none!important}
+}
+
+/* ===== Phase Upgrade (Items 2, 5, 6, 7, 8) ===== */
+/* 5. QR Scan Laser Line & Success Flash */
+.qr-scan-line{position:absolute;left:10%;right:10%;height:3px;background:linear-gradient(90deg,transparent,#3cc6d9,#a7f3d0,#3cc6d9,transparent);box-shadow:0 0 10px #3cc6d9;border-radius:3px;animation:qrLaserScan 2.2s ease-in-out infinite;pointer-events:none}
+@keyframes qrLaserScan{0%,100%{top:18%}50%{top:80%}}
+.qr-scan-wrap.ok{border-color:#2ec4a6!important;box-shadow:0 0 0 4px rgba(46,196,166,.45),0 8px 20px rgba(6,42,74,.28)!important}
+.qr-scan-wrap.ok .qr-reticle{border-color:#2ec4a6;border-style:solid}
+
+/* 6. Progress Shimmer & Certificate Ready Pulse */
+.progress i{position:relative;overflow:hidden}
+.progress i::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.38),transparent);transform:translateX(-100%);animation:progShimmer 2.8s ease-in-out infinite}
+@keyframes progShimmer{0%{transform:translateX(-100%)}55%,100%{transform:translateX(120%)}}
+#certBtn:not(:disabled){animation:certReadyPulse 2s ease-in-out infinite;box-shadow:0 6px 18px rgba(240,191,74,.45)}
+@keyframes certReadyPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.02);box-shadow:0 8px 22px rgba(240,191,74,.65)}}
+
+/* 7. Accessibility Focus Visible */
+button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,a:focus-visible,.stage:focus-visible{outline:3px solid #2d7aa6;outline-offset:2px}
+
+/* 8. Offline Status Banner */
+.offline-pill{display:none;position:fixed;bottom:calc(10px + env(safe-area-inset-bottom, 0px));left:50%;transform:translateX(-50%);z-index:70;background:rgba(29,58,82,.94);color:#fff;padding:7px 14px;border-radius:999px;font-family:Prompt,Sarabun,sans-serif;font-size:.78rem;font-weight:600;box-shadow:0 4px 14px rgba(0,0,0,.28);white-space:nowrap;max-width:92vw;overflow:hidden;text-overflow:ellipsis}
+body.is-offline .offline-pill{display:block}
+
+/* 2. Small / Narrow Screen Support (<= 380px) */
+@media (max-width:380px){
+  .wrap{padding:calc(env(safe-area-inset-top,0px) + 6px) 8px calc(env(safe-area-inset-bottom,0px) + 8px)}
+  .hud b{padding:4px 8px;font-size:.82rem}
+  .qr-btn-row{flex-direction:column;gap:6px}
+  .fb-star{width:44px;height:44px;font-size:1.45rem}
+  .playing-grid{gap:5px}
+  .mcard .b .card-title{font-size:.68rem}
+  #viewMap #stageList .stage{padding:9px 10px;gap:10px}
+  #viewMap #stageList .stage .ic{width:46px;height:46px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .qr-scan-line,.progress i::after,#certBtn:not(:disabled){animation:none!important}
+}
 </style>
 <title>WAGHOR AQUA QUEST ภารกิจพิชิตโลกใต้น้ำ · พิพิธภัณฑ์สัตว์น้ำหว้ากอ</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1320,11 +1413,25 @@ body.in-stage[data-zone="5"]{background:linear-gradient(180deg,#f3e2a8 0%,#f5e8c
   <img class="waka" id="ulWaka" data-waka="point" alt="" style="--ww:96px;margin-bottom:6px">
   <h3 id="ulTitle" style="margin:0 0 6px;font-size:1.3rem">🔑 ปลดล็อกด่าน</h3>
   <div class="no-refresh-warn compact" id="ulWarnBanner" role="status"><svg class="nrw-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span><span class="nrw-t">ด่านที่ปลดล็อกและคะแนนจะถูกบันทึกไว้ 2 ชั่วโมง</span><span class="nrw-s">หากรีเฟรชกลางด่านจะต้องเริ่มเล่นด่านนั้นใหม่</span></span></div>
-  <p id="ulDesc" style="color:var(--muted);margin:10px 0 16px;font-size:.92rem;line-height:1.4">
-    กรุณากรอก <b>รหัสผ่าน 4 หลัก</b> ที่ติดไว้ ณ ฐานกิจกรรม เพื่อเริ่มทำภารกิจ
+  <p id="ulDesc" style="color:var(--muted);margin:10px 0 12px;font-size:.92rem;line-height:1.4">
+    สแกน <b>QR Code</b> หรือกรอก <b>รหัส 4 หลัก</b> ณ ฐานกิจกรรมเพื่อเริ่มภารกิจ
   </p>
 
-  <input id="ulCode" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="••••" autocomplete="off" oninput="if(this.value.length===4)tryUnlock()" style="text-align:center;font-size:2.2rem;letter-spacing:14px;font-weight:700;width:100%;box-sizing:border-box;padding:12px;margin:0 0 16px;border-radius:14px;border:2px solid var(--aqua);background:var(--foam);color:var(--deep)">
+  <div class="qr-tools">
+    <div class="qr-btn-row">
+      <button type="button" class="btn ok" id="ulScanBtn" onclick="toggleQrScanner()">📷 เปิดกล้องสแกน QR</button>
+      <button type="button" class="btn ghost" id="ulPhotoBtn" onclick="triggerQrPhoto()">📸 ถ่ายรูปสแกน</button>
+    </div>
+    <input type="file" id="qrFileInput" accept="image/*" capture="environment" style="display:none" onchange="handleQrPhotoFile(this)">
+    <div class="qr-scan-wrap" id="qrScanWrap">
+      <video id="qrVideo" playsinline webkit-playsinline muted autoplay disablepictureinpicture></video>
+      <div class="qr-reticle"></div><div class="qr-scan-line"></div>
+    </div>
+    <div class="qr-status" id="qrScanStatus" role="status" aria-live="polite"></div>
+  </div>
+  <div class="qr-or-lbl" id="ulOrPinLbl">หรือกรอกรหัสผ่าน 4 หลัก</div>
+
+  <input id="ulCode" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="••••" autocomplete="off" oninput="if(this.value.length===4)tryUnlock()" style="text-align:center;font-size:2.2rem;letter-spacing:14px;font-weight:700;width:100%;box-sizing:border-box;padding:12px;margin:0 0 14px;border-radius:14px;border:2px solid var(--aqua);background:var(--foam);color:var(--deep)">
   <div class="row">
     <button type="button" class="btn ghost" id="ulCancelBtn" onclick="closeModal()" style="flex:1">ยกเลิก</button>
     <button type="button" class="btn" id="ulSubmitBtn" onclick="tryUnlock()" style="flex:1.4">ปลดล็อกด่าน 🚀</button>
@@ -1360,8 +1467,18 @@ body.in-stage[data-zone="5"]{background:linear-gradient(180deg,#f3e2a8 0%,#f5e8c
     <button class="btn ghost" id="staffCancelBtn" onclick="closeStaffPin()">ยกเลิก</button>
     <button class="btn" id="staffConfirmBtn" onclick="confirmStaffPin()">ยืนยัน</button>
   </div>
-  <button class="btn gold full" id="staffOpenReportBtn" onclick="confirmStaffPin('report')">📊 สรุปผลข้อคิดเห็น / ตั้งค่า Google Sheet</button>
+  <button class="btn gold full" id="staffOpenReportBtn" onclick="confirmStaffPin('report')" style="margin-bottom:8px">📊 สรุปผลข้อคิดเห็น / ตั้งค่า Google Sheet</button>
+  <button class="btn ok full" id="staffOpenQrBtn" onclick="confirmStaffPin('qr')">📷 ดู / ดาวน์โหลด QR ทั้ง 7 ด่าน (1:1)</button>
 </div></div>
+
+<!-- ===== โมดัลคลัง QR Code 1:1 ความละเอียดสูง (สำหรับแอดมิน) ===== -->
+<div class="modal" id="qrAdminModal"><div class="card" style="max-width:540px">
+  <h3 id="qrAdmTitle" style="margin:0 0 4px">📷 คลัง QR Code ประจำด่าน (อัตราส่วน 1:1)</h3>
+  <p id="qrAdmSub" style="color:var(--muted);margin:0 0 10px;font-size:.86rem">ขนาดความละเอียดสูง 2000×2000 px (300 DPI) สำหรับพิมพ์ติดฐานนิทรรศการโดยภาพไม่แตก</p>
+  <div id="qrAdmGrid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;max-height:60vh;overflow-y:auto;padding:4px 2px"></div>
+  <button type="button" class="btn ghost full" id="qrAdmCloseBtn" onclick="closeAdminQrGallery()" style="margin-top:12px">ปิดหน้าต่าง</button>
+</div></div>
+
 
 <!-- ===== โมดัลรายงานสรุปผลข้อคิดเห็นประจำเดือน & ตั้งค่า Google Sheets (สำหรับผู้ดูแล) ===== -->
 <div class="modal" id="feedbackReportModal"><div class="card" style="max-width:540px">
@@ -1444,7 +1561,8 @@ body.in-stage[data-zone="5"]{background:linear-gradient(180deg,#f3e2a8 0%,#f5e8c
     <button class="btn bad" id="rstConfirmBtn" onclick="confirmResetAll()">🗑️ ล้างข้อมูลเริ่มใหม่</button>
   </div>
 </div></div>
-<div class="toast" id="toast"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="offline-pill" id="offlineBanner" role="status" aria-live="polite">📡 กำลังเล่นแบบออฟไลน์ · ความคืบหน้าจะบันทึกไว้ในเครื่อง</div>
 
 <script>
 let FISH_SPEED_LEVEL = 5.72;  // ความเร็วปลาด่าน 1 (เร่งความเร็วปลาทุกตัวเพิ่ม +30% จาก 4.4 เป็น 5.72)
@@ -2148,7 +2266,10 @@ function applyStaticLang(){
   setTxt('fbrCopyBtn','📋 คัดลอกสรุป','📋 Copy Summary');
   setTxt('fbrCloseBtn','ปิดหน้าต่าง','Close');
 
-  setHtml('ulDesc','กรุณากรอก <b>รหัสผ่าน 4 หลัก</b> ที่ติดไว้ ณ ฐานกิจกรรม เพื่อเริ่มทำภารกิจ','Please enter the <b>4-digit code</b> posted at this station to start the stage.');
+  setHtml('ulDesc','สแกน <b>QR Code</b> หรือกรอก <b>รหัส 4 หลัก</b> ณ ฐานกิจกรรมเพื่อเริ่มภารกิจ','Scan the <b>QR Code</b> or enter the <b>4-digit code</b> at this station to start.');
+  setTxt('ulScanBtn', qrStream ? '⏹️ ปิดกล้องสแกน' : '📷 เปิดกล้องสแกน QR', qrStream ? '⏹️ Stop Camera' : '📷 Scan QR Camera');
+  setTxt('ulPhotoBtn','📸 ถ่ายรูปสแกน','📸 Snap QR Photo');
+  setTxt('ulOrPinLbl','หรือกรอกรหัสผ่าน 4 หลัก','or enter 4-digit PIN');
   setTxt('ulCancelBtn','ยกเลิก','Cancel');
   setTxt('ulSubmitBtn','ปลดล็อกด่าน','Unlock Stage');
 
@@ -2164,6 +2285,10 @@ function applyStaticLang(){
   setTxt('staffCancelBtn','ยกเลิก','Cancel');
   setTxt('staffConfirmBtn','ยืนยัน','Confirm');
   setTxt('staffOpenReportBtn','📊 สรุปผลข้อคิดเห็น / ตั้งค่า Google Sheet','📊 Feedback Summary / Google Sheet Setup');
+  setTxt('staffOpenQrBtn','📷 ดู / ดาวน์โหลด QR ทั้ง 7 ด่าน (1:1)','📷 View / Download 7 Stage QR Codes (1:1)');
+  setTxt('qrAdmTitle','📷 คลัง QR Code ประจำด่าน (อัตราส่วน 1:1)','📷 Stage QR Code Gallery (1:1 Print Ready)');
+  setTxt('qrAdmSub','ขนาดความละเอียดสูง 2000×2000 px สำหรับพิมพ์ติดฐานนิทรรศการโดยภาพไม่แตก','High-res 2000×2000 px PNGs ready to print for exhibition stations.');
+  setTxt('qrAdmCloseBtn','ปิดหน้าต่าง','Close');
 
   setTxt('pauseTitle','พักการผจญภัยชั่วคราว','Adventure Paused');
   setTxt('pauseLangLbl','🌐 เปลี่ยนภาษา:','🌐 Language:');
@@ -2180,6 +2305,7 @@ function applyStaticLang(){
   setTxt('rstConfirmBtn','🗑️ ล้างข้อมูลเริ่มใหม่','🗑️ Reset All');
 
   syncSndNoteLang();
+  syncOfflineBanner();
 }
 
 let lastResultArgs=null;
@@ -2386,7 +2512,8 @@ function openUnlock(id){
   ulId=id;
   const s=getStage(id);
   document.getElementById('ulTitle').textContent=L(`🔑 ปลดล็อกด่านที่ ${id}: ${stName(s)}`,`🔑 Unlock Stage ${id}: ${stName(s)}`);
-  document.getElementById('ulDesc').innerHTML=L(`กรุณากรอก <b>รหัสผ่าน 4 หลัก</b> ที่ติดไว้ภายในนิทรรศการเพื่อเริ่มทำภารกิจ`,`Please enter the <b>4-digit code</b> posted at this station to start the stage.`);
+  document.getElementById('ulDesc').innerHTML=L(`สแกน <b>QR Code</b> หรือกรอก <b>รหัส 4 หลัก</b> ที่ติดไว้ภายในนิทรรศการเพื่อเริ่มทำภารกิจ`,`Scan the <b>QR Code</b> or enter the <b>4-digit code</b> posted at this station to start.`);
+  const stEl=document.getElementById('qrScanStatus'); if(stEl) stEl.textContent='';
   const inp=document.getElementById('ulCode');
   if(inp){ inp.value=''; }
   wakaReset();
@@ -2395,7 +2522,274 @@ function openUnlock(id){
 }
 
 function closeModal(){
+  stopQrScanner();
   document.getElementById('unlockModal').classList.remove('show');
+}
+
+
+/* ===== ระบบสร้างและแสดงคลัง QR Code 1:1 (2000x2000 px) สำหรับแอดมิน ===== */
+const _QR_EXP=new Array(512),_QR_LOG=new Array(256);
+(function(){let x=1;for(let i=0;i<255;i++){_QR_EXP[i]=x;_QR_LOG[x]=i;x<<=1;if(x&256)x^=0x11d}for(let i=255;i<512;i++)_QR_EXP[i]=_QR_EXP[i-255]})();
+function _qrMul(a,b){return(a===0||b===0)?0:_QR_EXP[_QR_LOG[a]+_QR_LOG[b]]}
+function _qrRsGen(n){let g=[1];for(let i=0;i<n;i++){const ng=new Array(g.length+1).fill(0);for(let j=0;j<g.length;j++){ng[j]^=g[j];ng[j+1]^=_qrMul(g[j],_QR_EXP[i])}g=ng}return g}
+function _qrRsEnc(data,nsym){const gen=_qrRsGen(nsym),res=data.concat(new Array(nsym).fill(0));for(let i=0;i<data.length;i++){const c=res[i];if(c!==0)for(let j=1;j<gen.length;j++)res[i+j]^=_qrMul(gen[j],c)}return res.slice(data.length)}
+function buildQrV1M(text){
+  const raw=Array.from(new TextEncoder().encode(text));
+  const bits=[],push=(v,l)=>{for(let b=l-1;b>=0;b--)bits.push((v>>b)&1)};
+  push(4,4);push(raw.length,8);raw.forEach(b=>push(b,8));
+  for(let i=0;i<4&&bits.length<128;i++)bits.push(0);
+  while(bits.length%8!==0)bits.push(0);
+  const dcw=[];for(let i=0;i<bits.length;i+=8){let v=0;for(let b=0;b<8;b++)v=(v<<1)|bits[i+b];dcw.push(v)}
+  const pad=[0xec,0x11];let pi=0;while(dcw.length<16)dcw.push(pad[(pi++)%2]);
+  const all=dcw.concat(_qrRsEnc(dcw,10)),ab=[];
+  all.forEach(cw=>{for(let b=7;b>=0;b--)ab.push((cw>>b)&1)});
+  const N=21,grid=Array.from({length:N},()=>new Array(N).fill(null)),fn=Array.from({length:N},()=>new Array(N).fill(false));
+  const sf=(r,c,v)=>{grid[r][c]=v;fn[r][c]=true};
+  const df=(tr,tc)=>{for(let r=-1;r<=7;r++)for(let c=-1;c<=7;c++){const rr=tr+r,cc=tc+c;if(rr>=0&&rr<N&&cc>=0&&cc<N)sf(rr,cc,(r===-1||r===7||c===-1||c===7)?0:(r===0||r===6||c===0||c===6||(r>=2&&r<=4&&c>=2&&c<=4))?1:0)}};
+  df(0,0);df(0,N-7);df(N-7,0);
+  for(let i=8;i<N-8;i++){const v=i%2===0?1:0;sf(6,i,v);sf(i,6,v)}
+  sf(N-8,8,1);
+  for(let i=0;i<9;i++){if(i!==6){fn[8][i]=true;fn[i][8]=true}}
+  for(let i=0;i<8;i++){fn[8][N-1-i]=true;if(i<7)fn[N-1-i][8]=true}
+  let bi=0,up=true,col=N-1;
+  while(col>0){if(col===6)col--;for(let k=0;k<N;k++){const r=up?N-1-k:k;for(const dc of[0,-1]){const cc=col+dc;if(!fn[r][cc])grid[r][cc]=bi<ab.length?ab[bi++]:0}}up=!up;col-=2}
+  const mfns=[(r,c)=>(r+c)%2===0,(r,c)=>r%2===0,(r,c)=>c%3===0,(r,c)=>(r+c)%3===0,(r,c)=>((r>>1)+Math.floor(c/3))%2===0,(r,c)=>((r*c)%2+(r*c)%3)===0,(r,c)=>(((r*c)%2+(r*c)%3)%2)===0,(r,c)=>(((r+c)%2+(r*c)%3)%2)===0];
+  const af=(g,mid)=>{const fd=mid;let rem=fd<<10;for(let i=4;i>=0;i--)if((rem>>(i+10))&1)rem^=(0b10100110111<<i);const fmt=((fd<<10)|rem)^0b101010000010010;for(let i=0;i<6;i++)g[8][i]=(fmt>>(14-i))&1;g[8][7]=(fmt>>8)&1;g[8][8]=(fmt>>7)&1;g[7][8]=(fmt>>6)&1;for(let i=0;i<6;i++)g[5-i][8]=(fmt>>(5-i))&1;for(let i=0;i<7;i++)g[N-1-i][8]=(fmt>>(14-i))&1;for(let i=0;i<8;i++)g[8][N-8+i]=(fmt>>(7-i))&1};
+  const pen=g=>{let p=0;for(let r=0;r<N;r++){let run=1;for(let c=1;c<N;c++){if(g[r][c]===g[r][c-1]){run++;if(run===5)p+=3;else if(run>5)p++}else run=1}}for(let c=0;c<N;c++){let run=1;for(let r=1;r<N;r++){if(g[r][c]===g[r-1][c]){run++;if(run===5)p+=3;else if(run>5)p++}else run=1}}return p};
+  let best=null,bp=1e9;
+  mfns.forEach((mfn,mid)=>{const g=grid.map(r=>r.slice());for(let r=0;r<N;r++)for(let c=0;c<N;c++)if(!fn[r][c]&&mfn(r,c))g[r][c]^=1;af(g,mid);const s=pen(g);if(s<bp){bp=s;best=g}});
+  return best;
+}
+function renderStageQrCanvas(stage, size=2000){
+  const c=document.createElement('canvas');c.width=size;c.height=size;
+  const ctx=c.getContext('2d');
+  const zoneColors={1:'#1f9d78',2:'#e0705f',3:'#2d6fb5',4:'#1d9bb0',5:'#b8891a'};
+  const accent=zoneColors[stage.zoneNum]||'#2d6fb5';
+  ctx.fillStyle='#ffffff';ctx.fillRect(0,0,size,size);
+  ctx.strokeStyle=accent;ctx.lineWidth=size*0.012;
+  ctx.beginPath();ctx.roundRect(size*0.02,size*0.02,size*0.96,size*0.96,size*0.04);ctx.stroke();
+  ctx.fillStyle=accent;
+  ctx.beginPath();ctx.roundRect(size*0.18,size*0.048,size*0.64,size*0.055,size*0.028);ctx.fill();
+  ctx.fillStyle='#ffffff';ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.font=`800 ${Math.round(size*0.028)}px Prompt, Sarabun, sans-serif`;
+  ctx.fillText(`WAGHOR AQUA QUEST · ด่านที่ ${stage.id} / STAGE ${stage.id}`,size/2,size*0.0755);
+  ctx.fillStyle='#1d3a52';
+  ctx.font=`800 ${Math.round(size*0.038)}px Prompt, Sarabun, sans-serif`;
+  ctx.fillText(stage.name,size/2,size*0.14);
+  ctx.fillStyle='#566e80';
+  ctx.font=`600 ${Math.round(size*0.023)}px Prompt, Sarabun, sans-serif`;
+  ctx.fillText(stage.name_en,size/2,size*0.182);
+  const qr=buildQrV1M(stage.code),mod=Math.floor((size*0.54)/21),qSize=mod*21,qx=(size-qSize)/2,qy=size*0.225;
+  ctx.fillStyle='#0f2337';
+  for(let r=0;r<21;r++)for(let c2=0;c2<21;c2++)if(qr[r][c2])ctx.fillRect(qx+c2*mod,qy+r*mod,mod,mod);
+  ctx.fillStyle='#f0f8fb';ctx.strokeStyle=accent;ctx.lineWidth=size*0.0035;
+  ctx.beginPath();ctx.roundRect(size*0.18,size*0.80,size*0.64,size*0.088,size*0.022);ctx.fill();ctx.stroke();
+  ctx.fillStyle='#1d3a52';
+  ctx.font=`800 ${Math.round(size*0.036)}px Prompt, Sarabun, sans-serif`;
+  ctx.fillText(`รหัสสำรอง / PIN: ${stage.code}`,size/2,size*0.844);
+  ctx.fillStyle='#64788a';
+  ctx.font=`500 ${Math.round(size*0.02)}px Sarabun, sans-serif`;
+  ctx.fillText('สแกน QR ในหน้าเกมเพื่อปลดล็อก · พิพิธภัณฑ์สัตว์น้ำหว้ากอ',size/2,size*0.93);
+  return c;
+}
+function openAdminQrGallery(){
+  const grid=document.getElementById('qrAdmGrid');
+  if(!grid) return;
+  grid.innerHTML='';
+  STAGES_DATA.forEach(st=>{
+    const card=document.createElement('div');
+    card.style.cssText='background:#f8fbfd;border:1.5px solid #c5d9e4;border-radius:16px;padding:10px;text-align:center;display:flex;flex-direction:column;gap:8px';
+    const preview=renderStageQrCanvas(st,500);
+    preview.style.cssText='width:100%;height:auto;border-radius:10px;box-shadow:none';
+    const btn=document.createElement('button');
+    btn.type='button';
+    btn.className='btn gold';
+    btn.style.cssText='min-height:38px;padding:7px 10px;font-size:.82rem';
+    btn.textContent=L(`⬇️ โหลด PNG 2000px (ด่าน ${st.id})`,`⬇️ Download 2000px PNG (Stage ${st.id})`);
+    btn.onclick=async()=>{
+      const hi=renderStageQrCanvas(st,2000);
+      await saveOrShareCanvasImage(hi,`waghor-stage-${st.id}-qr-2000x2000.png`,`Stage ${st.id} QR Code`);
+    };
+    card.appendChild(preview);
+    card.appendChild(btn);
+    grid.appendChild(card);
+  });
+  document.getElementById('qrAdminModal').classList.add('show');
+}
+function closeAdminQrGallery(){
+  sfx.tap();
+  document.getElementById('qrAdminModal').classList.remove('show');
+}
+
+/* ===== ระบบสแกน QR Code ในหน้าเกม (BarcodeDetector + jsQR Fallback + ถ่ายรูปสแกน) ===== */
+let qrStream=null, qrRaf=null, qrCanvas=null, qrCtx=null, qrDetector=null, qrJsLoaded=false;
+
+function extractPinFromQr(raw){
+  const s=String(raw||'').trim();
+  const mUrl=s.match(/[?&](?:pin|unlock|code)=(\d{4})/i);
+  if(mUrl) return mUrl[1];
+  const mExact=s.match(/^\D*(\d{4})\D*$/);
+  if(mExact) return mExact[1];
+  const mAny=s.match(/(\d{4})/);
+  return mAny?mAny[1]:'';
+}
+
+function loadJsQrLib(){
+  if(window.jsQR) return Promise.resolve(true);
+  if(navigator.onLine===false) return Promise.resolve(false);
+  if(qrJsLoaded) return new Promise(r=>{const iv=setInterval(()=>{if(window.jsQR){clearInterval(iv);r(true)}},100);setTimeout(()=>{clearInterval(iv);r(false)},4000)});
+  qrJsLoaded=true;
+  return new Promise(res=>{
+    const sc=document.createElement('script');
+    sc.src='https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js';
+    sc.onload=()=>res(true);
+    sc.onerror=()=>{qrJsLoaded=false;res(false);};
+    document.head.appendChild(sc);
+  });
+}
+
+let qrLibUnavailable=false;
+async function decodeQrFromSource(src, w, h, isPhoto=false){
+  qrLibUnavailable=false;
+  if('BarcodeDetector' in window){
+    try{
+      if(!qrDetector) qrDetector=new BarcodeDetector({formats:['qr_code']});
+      const hits=await qrDetector.detect(src);
+      if(hits && hits.length && hits[0].rawValue) return hits[0].rawValue;
+    }catch(_){}
+  }
+  const ok=await loadJsQrLib();
+  if(!ok || !window.jsQR){
+    qrLibUnavailable=true;
+    return '';
+  }
+  if(!qrCanvas){qrCanvas=document.createElement('canvas');qrCtx=qrCanvas.getContext('2d',{willReadFrequently:true});}
+  const tryRegion=(sx,sy,sw,sh,maxDim)=>{
+    const scale=Math.min(1, maxDim/Math.max(sw,sh));
+    const cw=Math.max(1,Math.round(sw*scale)), ch=Math.max(1,Math.round(sh*scale));
+    qrCanvas.width=cw; qrCanvas.height=ch;
+    qrCtx.drawImage(src,sx,sy,sw,sh,0,0,cw,ch);
+    const imgData=qrCtx.getImageData(0,0,cw,ch);
+    const code=window.jsQR(imgData.data,cw,ch,{inversionAttempts:'attemptBoth'});
+    return (code && code.data)?code.data:'';
+  };
+  const rw=w||640, rh=h||640;
+  let out=tryRegion(0,0,rw,rh,isPhoto?1200:640);
+  if(!out && isPhoto && rw>200 && rh>200){
+    out=tryRegion(Math.round(rw*0.15),Math.round(rh*0.15),Math.round(rw*0.7),Math.round(rh*0.7),1000);
+  }
+  return out;
+}
+
+function handleDecodedQr(rawText){
+  const pin=extractPinFromQr(rawText);
+  if(!pin) return false;
+  const wrap=document.getElementById('qrScanWrap');
+  if(wrap && wrap.classList.contains('on')){
+    wrap.classList.add('ok');
+    sfx.ok();
+    setTimeout(()=>{
+      wrap.classList.remove('ok');
+      stopQrScanner();
+      const inp=document.getElementById('ulCode');
+      if(inp) inp.value=pin;
+      tryUnlock();
+    },200);
+  }else{
+    stopQrScanner();
+    const inp=document.getElementById('ulCode');
+    if(inp) inp.value=pin;
+    tryUnlock();
+  }
+  return true;
+}
+
+function stopQrScanner(){
+  if(qrRaf){cancelAnimationFrame(qrRaf);qrRaf=null;}
+  if(qrStream){
+    try{qrStream.getTracks().forEach(t=>t.stop())}catch(_){}
+    qrStream=null;
+  }
+  const wrap=document.getElementById('qrScanWrap'); if(wrap) wrap.classList.remove('on');
+  const vid=document.getElementById('qrVideo'); if(vid){try{if(vid.webkitExitFullscreen)vid.webkitExitFullscreen();if(document.fullscreenElement)document.exitFullscreen();}catch(_){} vid.srcObject=null;}
+  const btn=document.getElementById('ulScanBtn');
+  if(btn) btn.textContent=L('📷 เปิดกล้องสแกน QR','📷 Scan QR Camera');
+}
+
+async function toggleQrScanner(){
+  if(qrStream){stopQrScanner();return;}
+  const stEl=document.getElementById('qrScanStatus');
+  const btn=document.getElementById('ulScanBtn');
+  if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
+    if(stEl) stEl.textContent=L('⚠️ เบราว์เซอร์นี้ไม่รองรับกล้องสด กรุณากด "📸 ถ่ายรูปสแกน" หรือกรอกรหัส 4 หลัก','⚠️ Live camera unavailable here. Use "📸 Snap QR Photo" or enter the 4-digit PIN.');
+    return;
+  }
+  try{
+    if(stEl) stEl.textContent=L('⏳ กำลังเปิดกล้อง...','⏳ Starting camera...');
+    qrStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}},audio:false});
+    const vid=document.getElementById('qrVideo');
+    const wrap=document.getElementById('qrScanWrap');
+    wrap.classList.add('on');
+    vid.setAttribute('playsinline','');
+    vid.setAttribute('webkit-playsinline','');
+    vid.playsInline=true;
+    vid.muted=true;
+    vid.controls=false;
+    vid.srcObject=qrStream;
+    await vid.play();
+    if(btn) btn.textContent=L('⏹️ ปิดกล้องสแกน','⏹️ Stop Camera');
+    if(stEl) stEl.textContent=L('🎯 ส่องกล้องไปที่ป้าย QR Code ประจำด่านได้เลย','🎯 Point your camera at the stage QR Code');
+    if(!('BarcodeDetector' in window)) loadJsQrLib();
+    let busy=false, lastScan=0;
+    const scanLoop=async(now)=>{
+      if(!qrStream) return;
+      if(!busy && now-lastScan>180 && vid.readyState>=2){
+        busy=true; lastScan=now;
+        try{
+          const raw=await decodeQrFromSource(vid, vid.videoWidth||640, vid.videoHeight||480);
+          if(raw && handleDecodedQr(raw)){busy=false;return;}
+        }catch(_){}
+        busy=false;
+      }
+      qrRaf=requestAnimationFrame(scanLoop);
+    };
+    qrRaf=requestAnimationFrame(scanLoop);
+  }catch(e){
+    stopQrScanner();
+    if(stEl) stEl.textContent=L('⚠️ เปิดกล้องไม่สำเร็จ (อาจไม่ได้อนุญาตสิทธิ์กล้อง) ใช้ "📸 ถ่ายรูปสแกน" หรือพิมพ์รหัส 4 หลักแทนได้ครับ','⚠️ Could not open camera. Please use "📸 Snap QR Photo" or type the 4-digit PIN.');
+  }
+}
+
+function triggerQrPhoto(){
+  const inp=document.getElementById('qrFileInput');
+  if(inp){inp.value='';inp.click();}
+}
+
+async function handleQrPhotoFile(input){
+  const file=input && input.files && input.files[0];
+  if(!file) return;
+  const stEl=document.getElementById('qrScanStatus');
+  if(stEl) stEl.textContent=L('⏳ กำลังอ่าน QR Code จากภาพ...','⏳ Reading QR Code from photo...');
+  try{
+    const url=URL.createObjectURL(file);
+    const img=new Image();
+    img.onload=async()=>{
+      const raw=await decodeQrFromSource(img, img.naturalWidth||img.width, img.naturalHeight||img.height, true);
+      URL.revokeObjectURL(url);
+      if(raw && handleDecodedQr(raw)){
+        if(stEl) stEl.textContent='';
+      }else{
+        sfx.bad();
+        if(stEl) stEl.textContent=qrLibUnavailable
+          ? L('⚠️ โหลดตัวอ่าน QR ไม่สำเร็จ (อาจเปิดในโหมด Preview หรือไม่มีเน็ต) กรุณาเปิดผ่าน Safari/Chrome หรือพิมพ์รหัส 4 หลัก','⚠️ QR decoder unavailable (blocked in Preview or offline). Open in Safari/Chrome or enter 4-digit PIN.')
+          : L('❌ ไม่พบ QR Code ในภาพ ลองถ่ายให้ชัดขึ้นหรือพิมพ์รหัส 4 หลักครับ','❌ No QR Code found in photo. Try again or enter the 4-digit PIN.');
+      }
+    };
+    img.onerror=()=>{URL.revokeObjectURL(url);if(stEl) stEl.textContent=L('❌ อ่านไฟล์ภาพไม่สำเร็จ','❌ Could not load image');};
+    img.src=url;
+  }catch(e){
+    if(stEl) stEl.textContent=L('❌ ไม่สามารถอ่านภาพได้','❌ Could not decode photo');
+  }
 }
 
 function tryUnlock(){
@@ -2443,6 +2837,7 @@ function confirmStaffPin(overrideMode){
     staffAuthOk=true;
     closeStaffPin();
     if(mode==='report') openFeedbackReport();
+    else if(mode==='qr') openAdminQrGallery();
     else unlockAllForDemo();
   }else{
     sfx.bad();toast(L('รหัส PIN ไม่ถูกต้อง','Incorrect Staff PIN'));
@@ -2542,7 +2937,34 @@ function bindTouchDragDrop(containerEl, onDropPair){
    9. ระบบกลางของเกม & หน้าสรุปเฉลยความรู้ (เกณฑ์ผ่าน 50%)
    ========================================================================= */
 let G={timers:[],cleanups:[],raf:null,ended:false,paused:false,curStageId:1,combo:0,maxCombo:0,onLangChange:null};
+
+/* ===== Screen Wake Lock & Offline Status (Items 4 & 8) ===== */
+let _wakeLock=null;
+async function requestWakeLock(){
+  try{
+    if('wakeLock' in navigator && document.visibilityState==='visible' && !_wakeLock){
+      _wakeLock=await navigator.wakeLock.request('screen');
+      _wakeLock.addEventListener('release',()=>{_wakeLock=null;});
+    }
+  }catch(_){}
+}
+function releaseWakeLock(){
+  try{if(_wakeLock){_wakeLock.release();_wakeLock=null;}}catch(_){}
+}
+function syncOfflineBanner(){
+  const off=navigator.onLine===false;
+  document.body.classList.toggle('is-offline',off);
+  const el=document.getElementById('offlineBanner');
+  if(el) el.textContent=L('📡 กำลังเล่นแบบออฟไลน์ · ความคืบหน้าจะบันทึกไว้ในเครื่อง','📡 Offline mode · Progress is saved locally');
+}
+window.addEventListener('online',syncOfflineBanner);
+window.addEventListener('offline',syncOfflineBanner);
+document.addEventListener('visibilitychange',()=>{
+  if(document.visibilityState==='visible' && document.getElementById('viewGame').classList.contains('active')) requestWakeLock();
+});
+
 function stopGame(){
+  releaseWakeLock();
   G.timers.forEach(id=>{clearInterval(id);clearTimeout(id)});G.timers=[];
   if(G.cleanups){G.cleanups.forEach(fn=>{try{fn()}catch(e){}});G.cleanups=[]}
   cancelAnimationFrame(G.raf);G.paused=false;G.onLangChange=null;G.onPauseRender=null;
@@ -2616,6 +3038,7 @@ function startStage(id){
   document.body.dataset.zone=String((s&&s.zoneNum)||STAGE_ZONE[id]||1);
   if(S && typeof S==='object'){S.activeStageId=id;}
   stopGame();G.ended=false;G.paused=false;G.curStageId=id;G.combo=0;G.maxCombo=0;lastResultArgs=null;go('viewGame');
+  requestWakeLock();
   const origKey=(s&&s.origId)||id;
   const fn={1:game1,2:game2,3:game3,4:game4,5:game5,6:game6,7:game7}[origKey];
   if(fn) fn(id);
@@ -6074,6 +6497,19 @@ document.getElementById('staffPin').addEventListener('keydown',e=>{if(e.key==='E
   }
 })();
 
+try{
+  const qp=new URLSearchParams(location.search);
+  const qPin=(qp.get('pin')||qp.get('unlock')||'').trim();
+  if(/^\d{4}$/.test(qPin)){
+    const targetSt=STAGES_DATA.find(x=>x.code===qPin);
+    if(targetSt && isPrevStagePassed(targetSt.id)){
+      S.stages[targetSt.id].unlocked=true;
+      save();
+      history.replaceState(null,'',location.pathname);
+      setTimeout(()=>{go('viewMap');startStage(targetSt.id);},250);
+    }
+  }
+}catch(_){}
 </script>
 </body>
 </html>
