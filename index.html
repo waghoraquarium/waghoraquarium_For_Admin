@@ -179,6 +179,12 @@ body.is-offline .offline-pill{display:block}
 @media (prefers-reduced-motion:reduce){
   .qr-scan-line,.progress i::after,#certBtn:not(:disabled){animation:none!important}
 }
+
+/* Emphasize QR scan over backup PIN */
+.qr-btn-row{flex-direction:column;gap:8px}
+#ulScanBtn{min-height:54px;font-size:1.08rem;font-weight:800;padding:12px 16px;box-shadow:0 4px 0 rgba(18,90,54,.28),0 8px 18px rgba(47,138,90,.28)}
+#ulPhotoBtn{min-height:42px;font-size:.9rem;padding:8px 12px}
+.qr-or-lbl{margin:10px 0 6px;font-size:.78rem}
 </style>
 <title>WAGHOR AQUA QUEST ภารกิจพิชิตโลกใต้น้ำ · พิพิธภัณฑ์สัตว์น้ำหว้ากอ</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1430,7 +1436,7 @@ body.in-stage[data-zone="5"]{background:linear-gradient(180deg,#f3e2a8 0%,#f5e8c
   <div class="qr-tools">
     <div class="qr-btn-row">
       <button type="button" class="btn ok" id="ulScanBtn" onclick="toggleQrScanner()">📷 เปิดกล้องสแกน QR</button>
-      <button type="button" class="btn ghost" id="ulPhotoBtn" onclick="triggerQrPhoto()">📸 ถ่ายรูปสแกน</button>
+      <button type="button" class="btn ghost" id="ulPhotoBtn" onclick="triggerQrPhoto()">📸 ถ่ายรูปสแกน QR (สำรอง)</button>
     </div>
     <input type="file" id="qrFileInput" accept="image/*" capture="environment" style="display:none" onchange="handleQrPhotoFile(this)">
     <div class="qr-scan-wrap" id="qrScanWrap">
@@ -1439,9 +1445,9 @@ body.in-stage[data-zone="5"]{background:linear-gradient(180deg,#f3e2a8 0%,#f5e8c
     </div>
     <div class="qr-status" id="qrScanStatus" role="status" aria-live="polite"></div>
   </div>
-  <div class="qr-or-lbl" id="ulOrPinLbl">หรือกรอกรหัสผ่าน 4 หลัก</div>
+  <div class="qr-or-lbl" id="ulOrPinLbl">หรือกรอกรหัสสำรอง 4 หลัก</div>
 
-  <input id="ulCode" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="••••" autocomplete="off" oninput="if(this.value.length===4)tryUnlock()" style="text-align:center;font-size:2.2rem;letter-spacing:14px;font-weight:700;width:100%;box-sizing:border-box;padding:12px;margin:0 0 14px;border-radius:14px;border:2px solid var(--aqua);background:var(--foam);color:var(--deep)">
+  <input id="ulCode" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="••••" autocomplete="off" oninput="if(this.value.length===4)tryUnlock()" style="text-align:center;font-size:1.35rem;letter-spacing:10px;font-weight:700;width:100%;max-width:210px;box-sizing:border-box;padding:8px 12px;margin:0 auto 10px;display:block;border-radius:12px;border:1.5px solid #b5cfdd;background:#f4f9fc;color:var(--deep)">
   <div class="row">
     <button type="button" class="btn ghost" id="ulCancelBtn" onclick="closeModal()" style="flex:1">ยกเลิก</button>
     <button type="button" class="btn" id="ulSubmitBtn" onclick="tryUnlock()" style="flex:1.4">ปลดล็อกด่าน 🚀</button>
@@ -2278,10 +2284,10 @@ function applyStaticLang(){
   setTxt('fbrCopyBtn','📋 คัดลอกสรุป','📋 Copy Summary');
   setTxt('fbrCloseBtn','ปิดหน้าต่าง','Close');
 
-  setHtml('ulDesc','สแกน <b>QR Code</b> หรือกรอก <b>รหัส 4 หลัก</b> ณ ฐานกิจกรรมเพื่อเริ่มภารกิจ','Scan the <b>QR Code</b> or enter the <b>4-digit code</b> at this station to start.');
+  setHtml('ulDesc','สแกน <b>QR Code</b> ที่ติดไว้ประจำฐานนิทรรศการเพื่อเริ่มภารกิจ','Scan the <b>QR Code</b> posted at this exhibition station to start');
   setTxt('ulScanBtn', qrStream ? '⏹️ ปิดกล้องสแกน' : '📷 เปิดกล้องสแกน QR', qrStream ? '⏹️ Stop Camera' : '📷 Scan QR Camera');
-  setTxt('ulPhotoBtn','📸 ถ่ายรูปสแกน','📸 Snap QR Photo');
-  setTxt('ulOrPinLbl','หรือกรอกรหัสผ่าน 4 หลัก','or enter 4-digit PIN');
+  setTxt('ulPhotoBtn','📸 ถ่ายรูปสแกน QR (สำรอง)','📸 Snap QR Photo (Backup)');
+  setTxt('ulOrPinLbl','หรือกรอกรหัสสำรอง 4 หลัก','or enter 4-digit backup PIN');
   setTxt('ulCancelBtn','ยกเลิก','Cancel');
   setTxt('ulSubmitBtn','ปลดล็อกด่าน','Unlock Stage');
 
@@ -2419,7 +2425,7 @@ function renderMap(){
       badge=L('▶️ เล่นได้','▶️ Play');
     }else if(prevPassed){
       cls='waitpin';
-      badge=L('🔑 ใส่รหัส','🔑 Enter PIN');
+      badge=L('📷 สแกน','📷 Scan');
     }
 
     const el=document.createElement('div');
@@ -2523,14 +2529,14 @@ function openUnlock(id){
   }
   ulId=id;
   const s=getStage(id);
-  document.getElementById('ulTitle').textContent=L(`🔑 ปลดล็อกด่านที่ ${id}: ${stName(s)}`,`🔑 Unlock Stage ${id}: ${stName(s)}`);
-  document.getElementById('ulDesc').innerHTML=L(`สแกน <b>QR Code</b> หรือกรอก <b>รหัส 4 หลัก</b> ที่ติดไว้ภายในนิทรรศการเพื่อเริ่มทำภารกิจ`,`Scan the <b>QR Code</b> or enter the <b>4-digit code</b> posted at this station to start.`);
+  document.getElementById('ulTitle').textContent=L(`📷 สแกนปลดล็อกด่านที่ ${id}: ${stName(s)}`,`📷 Scan to Unlock Stage ${id}: ${stName(s)}`);
+  document.getElementById('ulDesc').innerHTML=L(`สแกน <b>QR Code</b> ที่ติดไว้ประจำฐานนิทรรศการเพื่อเริ่มภารกิจ`,`Scan the <b>QR Code</b> posted at this exhibition station to start.`);
   const stEl=document.getElementById('qrScanStatus'); if(stEl) stEl.textContent='';
   const inp=document.getElementById('ulCode');
   if(inp){ inp.value=''; }
   wakaReset();
   document.getElementById('unlockModal').classList.add('show');
-  setTimeout(()=>{ if(inp) inp.focus(); }, 120);
+  /* Do not auto-focus backup PIN on mobile so QR scan stays primary */
 }
 
 function closeModal(){
@@ -3115,7 +3121,7 @@ function finishStage(id,score,max,factSummary,reviewList=[]){
     const nextUnlocked = S.stages[nxt]&&S.stages[nxt].unlocked;
     nextActionBtn = nextUnlocked
       ? `<button class="btn gold full" style="margin-bottom:10px" onclick="startStage(${nxt})">${L(`▶️ ไปเล่นด่านที่ ${nxt} ต่อเลย!`,`▶️ Play Stage ${nxt} Now!`)}</button>`
-      : `<button class="btn gold full" style="margin-bottom:10px" onclick="go('viewMap');openUnlock(${nxt})">${L(`🔑 ใส่รหัสเพื่อปลดล็อกด่านที่ ${nxt}`,`🔑 Enter PIN to Unlock Stage ${nxt}`)}</button>`;
+      : `<button class="btn gold full" style="margin-bottom:10px" onclick="go('viewMap');openUnlock(${nxt})">${L(`📷 สแกน QR ปลดล็อกด่านที่ ${nxt}`,`📷 Scan QR to Unlock Stage ${nxt}`)}</button>`;
   }else if(pass && !nxt){
     nextActionBtn = `<button class="btn gold full" style="margin-bottom:10px" onclick="go('viewCert')">${L('🏅 ไปรับเกียรติบัตรนักสำรวจ!','🏅 Claim Explorer Certificate!')}</button>`;
   }
