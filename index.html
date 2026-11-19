@@ -1333,6 +1333,7 @@ body.in-stage[data-zone="5"]{background:linear-gradient(180deg,#f3e2a8 0%,#f5e8c
     <div class="snd-note" id="sndNote"></div>
     <small id="startInfo"></small>
     <small id="devCredit" style="display:block;margin-top:2px;font-size:.76rem;opacity:.68;color:var(--muted);letter-spacing:0"></small>
+    <button type="button" id="iabHelpLinkStart" onclick="openInAppHelp()" style="display:block;margin:6px auto 0;background:none;border:0;box-shadow:none;width:auto;min-height:0;padding:6px 8px;font:inherit;font-size:.78rem;color:var(--muted);text-decoration:underline;opacity:.85;cursor:pointer;-webkit-tap-highlight-color:transparent"></button>
   </div>
 </section>
 
@@ -1439,7 +1440,7 @@ body.in-stage[data-zone="5"]{background:linear-gradient(180deg,#f3e2a8 0%,#f5e8c
 
 
 <!-- ===== โมดัลแจ้งเตือนเปิดผ่านเบราว์เซอร์หลัก (เฉพาะเมื่อเปิดจากแอปแชท) ===== -->
-<div class="modal" id="inAppBrowserModal"><div class="card" style="max-width:420px;text-align:left">
+<div class="modal" id="inAppBrowserModal" style="z-index:80"><div class="card" style="max-width:420px;text-align:left">
   <h3 id="iabTitle" style="margin:0 0 6px;text-align:center;color:var(--deep)">🌐 แนะนำให้เปิดผ่านเบราว์เซอร์หลัก</h3>
   <p id="iabDesc" style="margin:0 0 12px;font-size:.94rem;color:var(--muted);line-height:1.55"></p>
   <div id="iabSteps" style="background:var(--foam);border:1px solid var(--aqua);border-radius:14px;padding:12px 14px;font-size:.9rem;line-height:1.6;color:var(--txt);margin-bottom:14px"></div>
@@ -1550,6 +1551,7 @@ body.in-stage[data-zone="5"]{background:linear-gradient(180deg,#f3e2a8 0%,#f5e8c
   <button class="btn ok full" id="pauseResumeBtn" onclick="resumeGame()" style="margin-bottom:8px">▶️ เล่นต่อจากเดิม</button>
   <button class="btn gold full" id="pauseRestartBtn" onclick="restartCurrentStage()" style="margin-bottom:8px">🔄 เริ่มด่านนี้ใหม่</button>
   <button class="btn ghost full" id="pauseExitBtn" onclick="closePauseAndExit()">🗺️ กลับหน้าแผนที่พาสปอร์ต</button>
+  <button type="button" id="iabHelpLinkPause" onclick="openInAppHelp()" style="display:block;margin:6px auto 0;background:none;border:0;box-shadow:none;width:auto;min-height:0;padding:6px 8px;font:inherit;font-size:.78rem;color:var(--muted);text-decoration:underline;opacity:.85;cursor:pointer;-webkit-tap-highlight-color:transparent"></button>
 </div></div>
 <!-- ===== โมดัลยืนยันล้างข้อมูล ===== -->
 <div class="modal" id="resetModal"><div class="card" style="text-align:center">
@@ -2722,6 +2724,7 @@ async function toggleQrScanner(){
   const btn=document.getElementById('ulScanBtn');
   if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
     if(stEl) stEl.textContent=L('⚠️ เบราว์เซอร์นี้ไม่รองรับกล้องสด กรุณากด "📸 ถ่ายรูปสแกน" หรือกรอกรหัส 4 หลัก','⚠️ Live camera unavailable here. Use "📸 Snap QR Photo" or enter the 4-digit PIN.');
+    try{window.iabCameraProblem&&window.iabCameraProblem('unsupported')}catch(_){}
     return;
   }
   try{
@@ -2757,6 +2760,7 @@ async function toggleQrScanner(){
   }catch(e){
     stopQrScanner();
     if(stEl) stEl.textContent=L('⚠️ เปิดกล้องไม่สำเร็จ (อาจไม่ได้อนุญาตสิทธิ์กล้อง) ใช้ "📸 ถ่ายรูปสแกน" หรือพิมพ์รหัส 4 หลักแทนได้ครับ','⚠️ Could not open camera. Please use "📸 Snap QR Photo" or type the 4-digit PIN.');
+    try{window.iabCameraProblem&&window.iabCameraProblem(e&&e.name)}catch(_){}
   }
 }
 
@@ -6443,37 +6447,65 @@ document.getElementById('staffPin').addEventListener('keydown',e=>{if(e.key==='E
 })();
 
 (function(){
+  /* ตรวจว่าเปิดนอกเบราว์เซอร์หลักหรือไม่ — เตือนเฉพาะเมื่อเจอหลักฐานจริง
+     1) แอปแชท/WebView ที่ระบุได้ชัด  2) เก็บข้อมูลไม่ได้  3) กล้องใช้ไม่ได้ตอนกดสแกน
+     หมายเหตุ: ตัวสแกนรหัส iPhone ปลอม UA เป็น Safari จึงไม่เดาจาก UA ถ้าใช้งานได้ปกติจะไม่เตือน */
   const ua=navigator.userAgent||'';
   const isIOS=/iPhone|iPad|iPod/i.test(ua) || (navigator.platform==='MacIntel' && navigator.maxTouchPoints>1);
   const isIosWebView=isIOS && /AppleWebKit/i.test(ua) && (!/Safari\//i.test(ua) || !/Version\/[\d.]+/i.test(ua)) && !/CriOS|FxiOS|EdgiOS|OPiOS/i.test(ua);
   const isAndroidWebView=/Android/i.test(ua) && (/;\s*wv\)/i.test(ua) || /\bwv\b/i.test(ua));
-  const isKnownInApp=/Line\/|FBAN|FBAV|FB_IAB|Instagram|BytedanceWebview|Musical_ly|TikTok|MicroMessenger|Twitter|Snapchat|KAKAOTALK|Zalo|GSA\/|GoogleApp|Telegram|Discord|WhatsApp|Threads|Pinterest|LinkedInApp|QQ\/|Weibo|QR|Scanner/i.test(ua);
+  const isKnownInApp=/Line\/|FBAN|FBAV|FB_IAB|Instagram|BytedanceWebview|Musical_ly|TikTok|MicroMessenger|Twitter|Snapchat|KAKAOTALK|Zalo|GSA\/|GoogleApp|Telegram|Discord|WhatsApp|Threads|Pinterest|LinkedInApp|QQ\/|Weibo/i.test(ua);
   let isEmbedded=false;
-  try{ isEmbedded = (window.self !== window.top); }catch(_){ isEmbedded=true; }
-  const isInApp = isKnownInApp || isIosWebView || isAndroidWebView || isEmbedded;
-  // หมายเหตุ: ตัวสแกนรหัส (Code Scanner) ใน iPhone ใช้ SFSafariViewController ซึ่งปลอม UA เหมือน Safari ทุกประการ
-  // จึงต้องแสดงหน้าต่างเตือนให้ตรวจสอบบน iPhone ในครั้งแรกที่เปิด (บันทึกการปิดไว้ใน sessionStorage ไม่ให้เด้งซ้ำ)
-  const isIosStandalone = Boolean(window.navigator && window.navigator.standalone);
-  const isIosOtherMainBrowser = isIOS && /CriOS|FxiOS|EdgiOS|OPiOS/i.test(ua);
-  const isIosNeedCheck = isIOS && !isInApp && !isIosStandalone && !isIosOtherMainBrowser;
+  try{ isEmbedded=(window.self!==window.top); }catch(_){ isEmbedded=true; }
+  const isInApp=isKnownInApp||isIosWebView||isAndroidWebView||isEmbedded;
+
+  let mode='inapp'; /* inapp | storage | camera | manual */
+  const seen={};
+  function seenGet(m){ if(seen[m]) return true; try{ return sessionStorage.getItem('wk_iab_seen_'+m)==='1'; }catch(_){ return false; } }
+  function seenSet(m){ seen[m]=true; try{ sessionStorage.setItem('wk_iab_seen_'+m,'1'); }catch(_){} }
+
+  function storageOk(){
+    try{
+      const k='wk_probe_'+Date.now();
+      localStorage.setItem(k,'1');
+      const ok=localStorage.getItem(k)==='1';
+      localStorage.removeItem(k);
+      return ok;
+    }catch(_){ return false; }
+  }
 
   window.renderInAppModal=function(){
+    const hl=L('ℹ️ เปิดเกมแล้วมีปัญหา? ดูวิธีเปิดใน Safari/Chrome','ℹ️ Game not working right? How to open in Safari/Chrome');
+    ['iabHelpLinkStart','iabHelpLinkPause'].forEach(id=>{const e=document.getElementById(id); if(e) e.textContent=hl;});
     const t=document.getElementById('iabTitle');
     const d=document.getElementById('iabDesc');
     const s=document.getElementById('iabSteps');
     const cb=document.getElementById('iabCopyBtn');
     const xb=document.getElementById('iabCloseBtn');
     if(!t||!d||!s||!cb||!xb) return;
-    t.textContent=L('🌐 แนะนำให้เปิดผ่านเบราว์เซอร์หลัก','🌐 Open in Main Browser');
-    d.textContent=isIosNeedCheck
-      ? L(
-          'หากคุณสแกนผ่าน "ตัวสแกนรหัส" หรือแอปแชท (สังเกตจะมีปุ่ม "เสร็จสิ้น" ด้านบน) หน้าจอเกมและกล้องสแกนด่านอาจแสดงผลไม่สมบูรณ์ แนะนำให้เปิดในแอป Safari เต็มจอก่อนเล่นครับ:',
-          'If you opened this via iPhone Code Scanner or a chat app (you will see a "Done" button at top), please switch to full Safari for the best UI and camera scanner:'
-        )
-      : L(
-          'คุณกำลังเปิดเกมผ่านแอปแชทหรือตัวสแกน QR ซึ่งอาจทำให้หน้าจอแสดงผลไม่สมบูรณ์ กล้องสแกนไม่ทำงาน ข้อมูลด่านหาย หรือบันทึกรูปเกียรติบัตรไม่ได้ แนะนำให้เปิดใน Safari หรือ Chrome:',
-          'You are opening this game inside a chat app or QR scanner. To ensure full UI display, camera scanning, saved progress, and certificate download, please open it in Safari or Chrome:'
-        );
+    const TITLES={
+      inapp:['🌐 แนะนำให้เปิดผ่านเบราว์เซอร์หลัก','🌐 Open in Main Browser'],
+      manual:['🌐 วิธีเปิดเกมในเบราว์เซอร์หลัก','🌐 How to Open in Your Browser'],
+      camera:['📷 กล้องใช้ไม่ได้ในหน้านี้','📷 Camera Unavailable Here'],
+      storage:['💾 บันทึกความคืบหน้าไม่ได้','💾 Cannot Save Progress']
+    };
+    const DESCS={
+      inapp:[
+        'คุณกำลังเปิดเกมผ่านแอปแชทหรือตัวสแกน QR ซึ่งอาจทำให้หน้าจอแสดงผลไม่สมบูรณ์ กล้องสแกนไม่ทำงาน ข้อมูลด่านหาย หรือบันทึกรูปเกียรติบัตรไม่ได้ แนะนำให้เปิดใน Safari หรือ Chrome:',
+        'You are opening this game inside a chat app or QR scanner. To ensure full UI display, camera scanning, saved progress, and certificate download, please open it in Safari or Chrome:'],
+      manual:[
+        'หากหน้าเกมแสดงผลไม่ปกติ กล้องสแกนไม่ทำงาน หรือเห็นปุ่ม "เสร็จสิ้น" ด้านบน (แปลว่าเปิดผ่านตัวสแกนรหัสหรือแอปแชท) แนะนำให้เปิดเกมใน Safari หรือ Chrome:',
+        'If the game looks odd, the camera does not work, or you see a "Done" button at the top (meaning it opened inside a code scanner or chat app), please open it in Safari or Chrome:'],
+      camera:[
+        'กล้องสแกนใช้ไม่ได้ในหน้านี้ (อาจเปิดผ่านตัวสแกนรหัสหรือแอปแชท) หากเพิ่งกดไม่อนุญาตกล้อง ให้อนุญาตกล้องให้เบราว์เซอร์ก่อน หรือเปิดเกมใน Safari / Chrome แล้วสแกนอีกครั้ง ระหว่างนี้ยังใช้ "ถ่ายรูปสแกน" หรือกรอกรหัส 4 หลักได้:',
+        'The live camera is not available here (you may be inside a code scanner or chat app). If you just denied camera access, allow it for your browser, or open the game in Safari / Chrome and scan again. You can still use "Snap QR Photo" or the 4-digit PIN:'],
+      storage:[
+        'หน้านี้บันทึกความคืบหน้าไม่ได้ (อาจเปิดผ่านตัวสแกนรหัส แอปแชท หรือโหมดส่วนตัว) ความคืบหน้าอาจหายเมื่อปิดหน้านี้ แนะนำให้เปิดใน Safari หรือ Chrome:',
+        'This page cannot save your progress (you may be in a code scanner, chat app, or private mode). Progress may be lost when you close it. Please open it in Safari or Chrome:']
+    };
+    const ti=TITLES[mode]||TITLES.inapp, de=DESCS[mode]||DESCS.inapp;
+    t.textContent=L(ti[0],ti[1]);
+    d.textContent=L(de[0],de[1]);
     s.innerHTML=isIOS
       ? L(
           '<strong>สำหรับ iPhone / iPad:</strong><br>1. แตะไอคอน <strong>เข็มทิศ Safari (🧭)</strong> ที่มุมล่างขวา เพื่อสลับเข้าแอป Safari ทันที<br>2. หรือแตะ <strong>จุดสามจุด (•••)</strong> / ปุ่ม <strong>แชร์ (↑)</strong> แล้วเลือก <strong>"เปิดใน Safari"</strong><br>3. หรือกด <strong>คัดลอกลิงก์</strong> ด้านล่างแล้วนำไปวางในแอป Safari',
@@ -6484,14 +6516,29 @@ document.getElementById('staffPin').addEventListener('keydown',e=>{if(e.key==='E
           '<strong>For Android:</strong><br>1. Tap the <strong>⋮</strong> menu at the top-right<br>2. Choose <strong>"Open in Chrome"</strong> or <strong>"Open in browser"</strong><br>3. Or tap <strong>Copy Link</strong> below and paste it into Chrome'
         );
     cb.textContent=L('📋 คัดลอกลิงก์','📋 Copy Link');
-    xb.textContent=isIosNeedCheck
-      ? L('✅ เปิดใน Safari อยู่แล้ว','✅ Already in Safari')
-      : L('เล่นต่อในหน้านี้','Continue Here');
+    xb.textContent=(mode==='manual'||mode==='camera') ? L('ปิด','Close') : L('เล่นต่อในหน้านี้','Continue Here');
   };
+
+  function showModal(m){
+    mode=m;
+    window.renderInAppModal();
+    const el=document.getElementById('inAppBrowserModal');
+    if(el) el.classList.add('show');
+  }
   window.closeInAppModal=function(){
-    try{ sessionStorage.setItem('wk_iab_seen','1'); }catch(_){}
+    seenSet(mode);
     const m=document.getElementById('inAppBrowserModal');
     if(m) m.classList.remove('show');
+  };
+  window.openInAppHelp=function(){
+    try{ sfx.tap(); }catch(_){}
+    showModal('manual');
+  };
+  /* เรียกจากตัวสแกน QR เมื่อกล้องเปิดไม่ได้ — เด้งครั้งเดียวต่อเซสชัน */
+  window.iabCameraProblem=function(name){
+    if(/^(NotFoundError|DevicesNotFoundError|NotReadableError|TrackStartError|AbortError|OverconstrainedError)$/.test(name||'')) return;
+    if(seenGet('camera')) return;
+    showModal('camera');
   };
   window.copyGameUrl=function(){
     const url=window.location.href;
@@ -6507,16 +6554,12 @@ document.getElementById('staffPin').addEventListener('keydown',e=>{if(e.key==='E
     try{document.execCommand('copy');}catch(e){}
     document.body.removeChild(ta);
   }
+
   renderInAppModal();
-  let alreadySeen=false;
-  try{ alreadySeen = sessionStorage.getItem('wk_iab_seen')==='1'; }catch(_){}
-  const shouldWarn = isInApp || (isIosNeedCheck && !alreadySeen && !(window.S && S.name));
-  if(shouldWarn){
-    setTimeout(()=>{
-      const m=document.getElementById('inAppBrowserModal');
-      if(m) m.classList.add('show');
-    }, 350);
-  }
+  let first=null;
+  if(isInApp){ if(!seenGet('inapp')) first='inapp'; }
+  else if(!storageOk() && !seenGet('storage')){ first='storage'; }
+  if(first) setTimeout(()=>showModal(first),350);
 })();
 
 try{
