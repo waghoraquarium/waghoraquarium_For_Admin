@@ -1285,7 +1285,6 @@ body.in-stage[data-zone="5"]{background:linear-gradient(180deg,#f3e2a8 0%,#f5e8c
 .waka-in{display:inline-block;width:38px;height:auto;vertical-align:middle;margin:-6px 6px -4px 0;filter:drop-shadow(0 2px 4px rgba(0,25,45,.2));pointer-events:none}
 @keyframes wakaFloat{0%,100%{transform:translateY(0) rotate(-1.5deg)}50%{transform:translateY(-6px) rotate(1.5deg)}}
 @keyframes wakaShake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px) rotate(-3deg)}40%{transform:translateX(8px) rotate(3deg)}60%{transform:translateX(-6px)}80%{transform:translateX(6px)}}
-.ui-ic{width:17px;height:17px;flex-shrink:0;display:inline-block;vertical-align:middle}
 body.anim-paused #bubbles span,body.in-stage #bubbles span,
 #viewStart:not(.active) #startSwim .rays,#viewStart:not(.active) #startSwim .sbub,#viewStart:not(.active) #startSwim .swm,
 body.anim-paused #startSwim .rays,body.anim-paused #startSwim .sbub,body.anim-paused #startSwim .swm{animation-play-state:paused!important}
@@ -1359,7 +1358,7 @@ body.anim-paused #startSwim .rays,body.anim-paused #startSwim .sbub,body.anim-pa
   <div class="stages" id="stageList"></div>
   <div class="card">
     <button class="btn gold full" id="certBtn" onclick="go('viewCert')">🏅 รับเกียรติบัตร (เมื่อผ่านครบ 7 ด่าน)</button>
-    <button class="btn ghost full" id="resetBtn" style="margin-top:10px" onclick="resetAll()"><svg class="ui-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><polyline points="21 3 21 9 15 9"/></svg><span class="btn-txt">ล้างข้อมูลเริ่มใหม่</span></button>
+    <button class="btn ghost full" id="resetBtn" style="margin-top:10px" onclick="resetAll()">🔄 ล้างข้อมูลเริ่มใหม่</button>
   </div>
 </section>
 
@@ -1402,13 +1401,13 @@ body.anim-paused #startSwim .rays,body.anim-paused #startSwim .sbub,body.anim-pa
     <h2 id="certHeading" style="margin-top:0;user-select:none;-webkit-user-select:none">🏅 เกียรติบัตรนักสำรวจโลกใต้น้ำ</h2>
     <label id="certNameLbl" style="font-weight:600">ชื่อ-นามสกุล</label><input id="certName" placeholder="พิมพ์ชื่อ-นามสกุลของคุณ" oninput="if(window.S){S.name=this.value.trim();save();}drawCertificate()">
     <label id="certSchoolLbl" style="font-weight:600">โรงเรียน / หน่วยงาน</label><input id="certSchool" placeholder="พิมพ์ชื่อโรงเรียน (ไม่บังคับ)" oninput="if(window.S){S.school=this.value.trim();save();}drawCertificate()">
-    <button class="btn full" id="certUpdateBtn" onclick="drawCertificate()"><svg class="ui-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/></svg><span class="btn-txt">อัปเดตชื่อบนเกียรติบัตร</span></button>
+    <button class="btn full" id="certUpdateBtn" onclick="drawCertificate()">✨ อัปเดตชื่อบนเกียรติบัตร</button>
     <div class="cert-preview-wrap">
       <canvas id="certCanvas" width="1600" height="1131"></canvas>
       <img id="certPreviewImg" alt="เกียรติบัตรนักสำรวจโลกใต้น้ำ">
     </div>
     <div class="cert-save-tip" id="certSaveTip">📲 กดปุ่มด้านล่างเพื่อบันทึกเข้ามือถือทันที หรือ <b>แตะค้างที่รูปเกียรติบัตร</b> แล้วเลือก <b>"บันทึกรูปภาพ (Save to Photos)"</b></div>
-    <button class="btn gold full" id="certDlBtn" style="margin-top:10px" onclick="downloadCertificatePNG()"><svg class="ui-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg><span class="btn-txt">บันทึกเกียรติบัตรเข้าโทรศัพท์</span></button>
+    <button class="btn gold full" id="certDlBtn" style="margin-top:10px" onclick="downloadCertificatePNG()">⬇️ บันทึกเกียรติบัตรเข้าโทรศัพท์</button>
     <a class="btn ok full" id="googleFormLinkBtn" href="https://docs.google.com/forms/d/e/1FAIpQLScxEZFPnf8WqMufdo02KUPU1KGzWLXPEEcqFM0GrkAUAtSVGg/viewform?usp=header" target="_blank" rel="noopener noreferrer" onclick="sfx.tap()" style="display:flex;align-items:center;justify-content:center;gap:6px;text-decoration:none;margin-top:10px;text-align:center">
       📋 แบบประเมินความพึงพอใจ (Google Form) ↗
     </a>
@@ -1478,8 +1477,8 @@ body.anim-paused #startSwim .rays,body.anim-paused #startSwim .sbub,body.anim-pa
     <button class="btn ghost" id="staffCancelBtn" onclick="closeStaffPin()">ยกเลิก</button>
     <button class="btn" id="staffConfirmBtn" onclick="confirmStaffPin()">ยืนยัน</button>
   </div>
-  <button class="btn gold full" id="staffOpenReportBtn" onclick="confirmStaffPin('report')" style="margin-bottom:8px"><svg class="ui-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg><span class="btn-txt">สรุปผลข้อคิดเห็น / ตั้งค่า Google Sheet</span></button>
-  <button class="btn ok full" id="staffOpenQrBtn" onclick="confirmStaffPin('qr')"><svg class="ui-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3zM17 17h4v4h-4zM14 20h3"/></svg><span class="btn-txt">ดู / ดาวน์โหลด QR ทั้ง 7 ด่าน (1:1)</span></button>
+  <button class="btn gold full" id="staffOpenReportBtn" onclick="confirmStaffPin('report')" style="margin-bottom:8px">📊 สรุปผลข้อคิดเห็น / ตั้งค่า Google Sheet</button>
+  <button class="btn ok full" id="staffOpenQrBtn" onclick="confirmStaffPin('qr')">📷 ดู / ดาวน์โหลด QR ทั้ง 7 ด่าน (1:1)</button>
 </div></div>
 
 <!-- ===== โมดัลคลัง QR Code 1:1 ความละเอียดสูง (สำหรับแอดมิน) ===== -->
@@ -1506,8 +1505,8 @@ body.anim-paused #startSwim .rays,body.anim-paused #startSwim .sbub,body.anim-pa
       <label id="fbrTokenLbl" for="fbrTokenInput" style="font-weight:700;font-family:Prompt,Sarabun,Thonburi,Tahoma,sans-serif;display:block;margin-bottom:2px">🔑 รหัสลับสำหรับดึงข้อมูล (ADMIN_TOKEN ใน Apps Script):</label>
       <input id="fbrTokenInput" type="password" autocomplete="off" placeholder="รหัสเดียวกับที่ตั้งในโค้ด Apps Script" style="font-size:.85rem;padding:8px 10px;margin:2px 0 8px">
       <div class="row" style="margin-bottom:8px">
-        <button type="button" class="btn ok" id="fbrSaveUrlBtn" onclick="saveSheetConfigFromModal()" style="min-height:38px;padding:6px 10px;font-size:.85rem"><svg class="ui-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg><span class="btn-txt">บันทึกลิงก์</span></button>
-        <button type="button" class="btn gold" id="fbrCopyScriptBtn" onclick="copyGoogleAppsScriptCode()" style="min-height:38px;padding:6px 10px;font-size:.85rem"><svg class="ui-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span class="btn-txt">คัดลอกโค้ด Apps Script</span></button>
+        <button type="button" class="btn ok" id="fbrSaveUrlBtn" onclick="saveSheetConfigFromModal()" style="min-height:38px;padding:6px 10px;font-size:.85rem">💾 บันทึกลิงก์</button>
+        <button type="button" class="btn gold" id="fbrCopyScriptBtn" onclick="copyGoogleAppsScriptCode()" style="min-height:38px;padding:6px 10px;font-size:.85rem">📋 คัดลอกโค้ด Apps Script</button>
       </div>
       <div id="fbrSetupGuide" style="background:#fff;border:1px dashed #b5d1e2;border-radius:10px;padding:8px 10px;font-size:.8rem;color:var(--muted)">
         <b>วิธีติดตั้งใน Google Sheet (ทำครั้งเดียว):</b><br>
@@ -1521,8 +1520,8 @@ body.anim-paused #startSwim .rays,body.anim-paused #startSwim .sbub,body.anim-pa
   </details>
 
   <div class="row" style="margin-bottom:8px">
-    <button type="button" class="btn" id="fbrFetchCloudBtn" onclick="fetchFeedbackFromSheet()" style="min-height:40px;padding:8px 10px;font-size:.88rem"><svg class="ui-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><polyline points="21 3 21 9 15 9"/></svg><span class="btn-txt">ดึงข้อมูลล่าสุดจาก Sheet</span></button>
-    <a class="btn gold" id="fbrOpenSheetBtn" href="https://docs.google.com/spreadsheets/d/1oc_WGUb8bVB6uBBLKceGwNS31lrfnbzzZtdW0HI23O8/edit?gid=2043458521#gid=2043458521" target="_blank" rel="noopener noreferrer" onclick="return openConnectedGoogleSheet(event)" style="min-height:40px;padding:8px 10px;font-size:.88rem;display:flex;align-items:center;justify-content:center;text-decoration:none;text-align:center"><svg class="ui-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg><span class="btn-txt">เปิดตาราง Google Sheet ↗</span></a>
+    <button type="button" class="btn" id="fbrFetchCloudBtn" onclick="fetchFeedbackFromSheet()" style="min-height:40px;padding:8px 10px;font-size:.88rem">🔄 ดึงข้อมูลล่าสุดจาก Sheet</button>
+    <a class="btn gold" id="fbrOpenSheetBtn" href="https://docs.google.com/spreadsheets/d/1oc_WGUb8bVB6uBBLKceGwNS31lrfnbzzZtdW0HI23O8/edit?gid=2043458521#gid=2043458521" target="_blank" rel="noopener noreferrer" onclick="return openConnectedGoogleSheet(event)" style="min-height:40px;padding:8px 10px;font-size:.88rem;display:flex;align-items:center;justify-content:center;text-decoration:none;text-align:center">📗 เปิดตาราง Google Sheet ↗</a>
   </div>
 
   <label id="fbrMonthLbl" for="fbMonthSelect" style="font-weight:700;font-family:Prompt,Sarabun,Thonburi,Tahoma,sans-serif;font-size:.88rem">📅 เลือกเดือนที่ต้องการสรุปผล:</label>
@@ -1544,8 +1543,8 @@ body.anim-paused #startSwim .rays,body.anim-paused #startSwim .sbub,body.anim-pa
   <div class="fb-list" id="fbrList"></div>
 
   <div class="row" style="margin-top:10px">
-    <button type="button" class="btn ok" id="fbrExportCsvBtn" onclick="exportFeedbackCSV()"><svg class="ui-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg><span class="btn-txt">ดาวน์โหลด Excel (.CSV)</span></button>
-    <button type="button" class="btn gold" id="fbrCopyBtn" onclick="copyFeedbackSummaryText()"><svg class="ui-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span class="btn-txt">คัดลอกสรุป</span></button>
+    <button type="button" class="btn ok" id="fbrExportCsvBtn" onclick="exportFeedbackCSV()">📥 ดาวน์โหลด Excel (.CSV)</button>
+    <button type="button" class="btn gold" id="fbrCopyBtn" onclick="copyFeedbackSummaryText()">📋 คัดลอกสรุป</button>
   </div>
   <button type="button" class="btn ghost full" id="fbrCloseBtn" onclick="closeFeedbackReport()" style="margin-top:8px">ปิดหน้าต่าง</button>
 </div></div>
@@ -1570,7 +1569,7 @@ body.anim-paused #startSwim .rays,body.anim-paused #startSwim .sbub,body.anim-pa
   <p id="rstDesc" style="color:var(--muted);margin:0 0 14px;font-size:.95rem">ต้องการล้างตราประทับและคะแนนทั้งหมด แล้วเริ่มผจญภัยใหม่ตั้งแต่ด่านที่ 1 ใช่ไหม?</p>
   <div class="row">
     <button class="btn ghost" id="rstCancelBtn" onclick="closeResetModal()">ยกเลิก</button>
-    <button class="btn bad" id="rstConfirmBtn" onclick="confirmResetAll()"><svg class="ui-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg><span class="btn-txt">ล้างข้อมูลเริ่มใหม่</span></button>
+    <button class="btn bad" id="rstConfirmBtn" onclick="confirmResetAll()">🗑️ ล้างข้อมูลเริ่มใหม่</button>
   </div>
 </div></div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
@@ -2225,7 +2224,6 @@ function applyStaticLang(){
     }
   });
   const setTxt=(id,th,en)=>{const el=document.getElementById(id);if(el)el.textContent=L(th,en)};
-  const setBtnTxt=(id,th,en)=>{const el=document.getElementById(id);if(!el)return;const sp=el.querySelector('.btn-txt');if(sp)sp.textContent=L(th,en);else el.textContent=L(th,en);};
   const setHtml=(id,th,en)=>{const el=document.getElementById(id);if(el)el.innerHTML=L(th,en)};
 
   setHtml('stMainTitle','<span style="display:block;letter-spacing:1px;font-size:0.86em">WAGHOR AQUA QUEST</span><span style="display:block;font-size:0.56em;font-weight:600;margin-top:2px;letter-spacing:0.5px">ภารกิจพิชิตโลกใต้น้ำ</span>','<span style="display:block;letter-spacing:1px;font-size:0.86em">WAGHOR AQUA QUEST</span><span style="display:block;font-size:0.56em;font-weight:600;margin-top:2px;letter-spacing:0.5px">Underwater Adventure</span>');
@@ -2233,7 +2231,7 @@ function applyStaticLang(){
   setHtml('mapMainTitle','WAGHOR AQUA QUEST<br><span style="font-size:0.82em;font-weight:600">ภารกิจพิชิตโลกใต้น้ำ</span>','WAGHOR AQUA QUEST<br><span style="font-size:0.82em;font-weight:600">Underwater Adventure</span>');
   setTxt('mapSubTitle','พิพิธภัณฑ์สัตว์น้ำหว้ากอ','Waghor Aquarium');
   setTxt('certBtn','🏅 รับเกียรติบัตร (เมื่อผ่านครบ 7 ด่าน)','🏅 Claim Explorer Certificate (Pass all 7 stages)');
-  setBtnTxt('resetBtn','ล้างข้อมูลเริ่มใหม่','Reset All Progress');
+  setTxt('resetBtn','🔄 ล้างข้อมูลเริ่มใหม่','🔄 Reset All Progress');
 
   setTxt('certHeading','🏅 เกียรติบัตรนักสำรวจโลกใต้น้ำ','🏅 Underwater Explorer Certificate');
   setTxt('certNameLbl','ชื่อ-นามสกุล','Full Name');
@@ -2243,9 +2241,9 @@ function applyStaticLang(){
   setHtml('startWarnBanner','<svg class="nrw-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span><span class="nrw-t">บันทึกความคืบหน้าอัตโนมัติ</span><span class="nrw-s">หากรีเฟรชกลางด่านจะต้องเริ่มเล่นด่านนั้นใหม่</span></span>','<svg class="nrw-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span><span class="nrw-t">Progress is auto-saved (expires after 2 hours)</span><span class="nrw-s">Refreshing mid-stage restarts only that stage · Tap Reset for a new player</span></span>');
   setHtml('mapWarnBanner','<svg class="nrw-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span><span class="nrw-t">บันทึกความคืบหน้าอัตโนมัติ</span><span class="nrw-s">หากรีเฟรชกลางด่านจะต้องเริ่มเล่นด่านนั้นใหม่</span></span>','<svg class="nrw-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span><span class="nrw-t">Auto-saves your progress (valid for 2 hours)</span><span class="nrw-s">Refreshing mid-stage restarts that stage · Tap "Reset All Progress" for a new player</span></span>');
   setHtml('ulWarnBanner','<svg class="nrw-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span><span class="nrw-t">ด่านที่ปลดล็อกและคะแนนจะถูกบันทึกไว้</span><span class="nrw-s">หากรีเฟรชกลางด่านจะต้องเริ่มเล่นด่านนั้นใหม่</span></span>','<svg class="nrw-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span><span class="nrw-t">Unlocked stages & scores are saved for 2 hours</span><span class="nrw-s">Refreshing mid-stage restarts only that stage</span></span>');
-  setBtnTxt('certUpdateBtn','อัปเดตชื่อบนเกียรติบัตร','Update Name on Certificate');
+  setTxt('certUpdateBtn','✨ อัปเดตชื่อบนเกียรติบัตร','✨ Update Name on Certificate');
   setHtml('certSaveTip','📲 กดปุ่มด้านล่างเพื่อบันทึกเข้ามือถือทันที หรือ <b>แตะค้างที่รูปเกียรติบัตร</b> แล้วเลือก <b>"บันทึกรูปภาพ (Save to Photos)"</b>','📲 Tap the button below to save directly to your phone, or <b>long-press the certificate image</b> and choose <b>"Save to Photos"</b>');
-  setBtnTxt('certDlBtn','บันทึกเกียรติบัตรเข้าโทรศัพท์','Save Certificate to Phone');
+  setTxt('certDlBtn','⬇️ บันทึกเกียรติบัตรเข้าโทรศัพท์','⬇️ Save Certificate to Phone');
   setTxt('certBackBtn','← กลับแผนที่','← Back to Map');
 
   setTxt('fbHeading','⭐ ขอความกรุณาให้คะแนนความพึงพอใจก่อนรับเกียรติบัตร','⭐ Rate Your Experience Before Claiming Certificate');
@@ -2265,16 +2263,16 @@ function applyStaticLang(){
   setTxt('fbrWebhookLbl','🔗 Google Apps Script Web App URL (สำหรับรับ-ส่งข้อมูล):','🔗 Google Apps Script Web App URL (Webhook):');
   setTxt('fbrSheetLinkLbl','📗 ลิงก์หน้าตาราง Google Sheet (สำหรับกดเปิดดูตารางโดยตรง):','📗 Google Sheet View URL (Optional direct link):');
   setTxt('fbrTokenLbl','🔑 รหัสลับสำหรับดึงข้อมูล (ADMIN_TOKEN ใน Apps Script):','🔑 Admin Token (ADMIN_TOKEN in Apps Script):');
-  setBtnTxt('fbrSaveUrlBtn','บันทึกลิงก์','Save URLs');
-  setBtnTxt('fbrCopyScriptBtn','คัดลอกโค้ด Apps Script','Copy Apps Script Code');
-  setBtnTxt('fbrFetchCloudBtn','ดึงข้อมูลล่าสุดจาก Sheet','Sync Latest Data from Sheet');
-  setBtnTxt('fbrOpenSheetBtn','เปิดตาราง Google Sheet ↗','Open Google Sheet ↗');
+  setTxt('fbrSaveUrlBtn','💾 บันทึกลิงก์','💾 Save URLs');
+  setTxt('fbrCopyScriptBtn','📋 คัดลอกโค้ด Apps Script','📋 Copy Apps Script Code');
+  setTxt('fbrFetchCloudBtn','🔄 ดึงข้อมูลล่าสุดจาก Sheet','🔄 Sync Latest Data from Sheet');
+  setTxt('fbrOpenSheetBtn','📗 เปิดตาราง Google Sheet ↗','📗 Open Google Sheet ↗');
   setTxt('fbrMonthLbl','📅 เลือกเดือนที่ต้องการสรุปผล:','📅 Select Month to Summarize:');
   setTxt('fbrCountLbl','ผู้ประเมิน (คน)','Responses');
   setTxt('fbrAvgLbl','คะแนนเฉลี่ย (เต็ม 5 ดาว)','Average Rating (out of 5)');
   setTxt('fbrListHead','💬 รายการข้อเสนอแนะ / ติชมจาก Google Sheet:','💬 Visitor Suggestions & Comments from Google Sheet:');
-  setBtnTxt('fbrExportCsvBtn','ดาวน์โหลด Excel (.CSV)','Export Excel (.CSV)');
-  setBtnTxt('fbrCopyBtn','คัดลอกสรุป','Copy Summary');
+  setTxt('fbrExportCsvBtn','📥 ดาวน์โหลด Excel (.CSV)','📥 Export Excel (.CSV)');
+  setTxt('fbrCopyBtn','📋 คัดลอกสรุป','📋 Copy Summary');
   setTxt('fbrCloseBtn','ปิดหน้าต่าง','Close');
 
   setHtml('ulDesc','สแกน <b>QR Code</b> ที่ติดไว้ประจำฐานนิทรรศการเพื่อเริ่มภารกิจ','Scan the <b>QR Code</b> posted at this exhibition station to start');
@@ -2295,8 +2293,8 @@ function applyStaticLang(){
   setTxt('staffDesc','ใส่รหัส PIN เพื่อปลดล็อกทุกด่าน หรือจัดการระบบส่งข้อคิดเห็นเข้า Google Sheets','Enter Staff PIN to unlock all stages or open Google Sheets Feedback Summary');
   setTxt('staffCancelBtn','ยกเลิก','Cancel');
   setTxt('staffConfirmBtn','ยืนยัน','Confirm');
-  setBtnTxt('staffOpenReportBtn','สรุปผลข้อคิดเห็น / ตั้งค่า Google Sheet','Feedback Summary / Google Sheet Setup');
-  setBtnTxt('staffOpenQrBtn','ดู / ดาวน์โหลด QR ทั้ง 7 ด่าน (1:1)','View / Download 7 Stage QR Codes (1:1)');
+  setTxt('staffOpenReportBtn','📊 สรุปผลข้อคิดเห็น / ตั้งค่า Google Sheet','📊 Feedback Summary / Google Sheet Setup');
+  setTxt('staffOpenQrBtn','📷 ดู / ดาวน์โหลด QR ทั้ง 7 ด่าน (1:1)','📷 View / Download 7 Stage QR Codes (1:1)');
   setTxt('qrAdmTitle','📷 คลัง QR Code ประจำด่าน (อัตราส่วน 1:1)','📷 Stage QR Code Gallery (1:1 Print Ready)');
   setTxt('qrAdmSub','ขนาดความละเอียดสูง 2000×2000 px สำหรับพิมพ์ติดฐานนิทรรศการโดยภาพไม่แตก','High-res 2000×2000 px PNGs ready to print for exhibition stations.');
   setTxt('qrAdmCloseBtn','ปิดหน้าต่าง','Close');
@@ -2313,7 +2311,7 @@ function applyStaticLang(){
   setTxt('rstTitle','ล้างความคืบหน้าทั้งหมด?','Reset All Progress?');
   setTxt('rstDesc','ต้องการล้างตราประทับและคะแนนทั้งหมด แล้วเริ่มผจญภัยใหม่ตั้งแต่ด่านที่ 1 ใช่ไหม?','Clear all collected stamps and scores and start over from Stage 1?');
   setTxt('rstCancelBtn','ยกเลิก','Cancel');
-  setBtnTxt('rstConfirmBtn','ล้างข้อมูลเริ่มใหม่','Reset All');
+  setTxt('rstConfirmBtn','🗑️ ล้างข้อมูลเริ่มใหม่','🗑️ Reset All');
 
   syncSndNoteLang();
   syncOfflineBanner();
@@ -6015,7 +6013,7 @@ async function fetchFeedbackFromSheet(silent=false){
   const btn=document.getElementById('fbrFetchCloudBtn');
   if(btn){
     btn.disabled=true;
-    const sp=btn.querySelector('.btn-txt');if(sp)sp.textContent=L('กำลังดึงข้อมูลจาก Sheet...','Loading from Sheet...');else btn.textContent=L('กำลังดึงข้อมูลจาก Sheet...','Loading from Sheet...');
+    btn.textContent=L('⏳ กำลังดึงข้อมูลจาก Sheet...','⏳ Loading from Sheet...');
   }
   try{
     const rawTok=(safeStorageGet('wk_admin_token')||'').trim();
@@ -6087,7 +6085,7 @@ async function fetchFeedbackFromSheet(silent=false){
   }finally{
     if(btn){
       btn.disabled=false;
-      const sp=btn.querySelector('.btn-txt');if(sp)sp.textContent=L('ดึงข้อมูลล่าสุดจาก Sheet','Sync Latest Data from Sheet');else btn.textContent=L('ดึงข้อมูลล่าสุดจาก Sheet','Sync Latest Data from Sheet');
+      btn.textContent=L('🔄 ดึงข้อมูลล่าสุดจาก Sheet','🔄 Sync Latest Data from Sheet');
     }
   }
 }
