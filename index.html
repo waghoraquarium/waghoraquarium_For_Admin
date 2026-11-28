@@ -832,7 +832,9 @@ textarea.fb-input:focus{border-color:var(--aqua)}textarea.fb-input:focus-visible
 }
 .lang-btn .fl{width:20px;height:14px;border-radius:3px}
 body.in-stage:not(.is-paused) #langBtn{display:none!important}
-body.in-stage .hud, body.in-stage #s45Top{padding-right:48px}
+body.in-stage .hud, body.in-stage #s45Top{padding-right:54px;width:100%;max-width:100%;box-sizing:border-box}
+body.in-stage .hud-right{flex-shrink:0;gap:5px}
+@media (max-width:430px){body.in-stage #hudPauseBtn,body.in-stage #hudExitBtn{padding:5px 9px!important;font-size:.8rem!important;min-height:36px!important}body.in-stage #s45Rd{padding:5px 9px;font-size:.8rem}}
 body.in-stage #s45App{padding-top:10px}
 .pause-lang-box{margin:0 auto 12px;display:flex;align-items:center;justify-content:center;gap:8px;background:#f0f8fb;border:1.5px solid #c5d9e4;border-radius:16px;padding:8px 12px;font-family:'Prompt',sans-serif;font-size:.88rem;font-weight:700;color:var(--deep)}
 .pause-lang-box .lang-btn{position:static;height:36px;box-shadow:0 2px 6px rgba(0,30,60,.15);border:1px solid #c5d9e4}
@@ -885,10 +887,10 @@ header.top{padding:26px 0 4px}
 }
 
 /* ===== ด่าน 1.4.5: วิวัฒนาการไต่ห่วงโซ่ (Food Chain Evolution) ===== */
-#s45App{max-width:520px;margin:0 auto;padding:42px 4px 6px;display:flex;flex-direction:column;justify-content:space-between;gap:6px;height:calc(100dvh - 28px);max-height:calc(100dvh - 28px);overflow:hidden;box-sizing:border-box;user-select:none;-webkit-user-select:none;position:relative}
+#s45App{width:100%;max-width:min(100%,520px);min-width:0;margin:0 auto;padding:42px 4px 6px;display:flex;flex-direction:column;justify-content:space-between;gap:6px;height:calc(100dvh - 28px);max-height:calc(100dvh - 28px);overflow:hidden;box-sizing:border-box;user-select:none;-webkit-user-select:none;position:relative}
 #s45Top{display:flex;align-items:center;justify-content:space-between;gap:6px;position:relative;z-index:25;flex-shrink:0;min-height:38px}
 #s45Rd{font-family:Prompt,Sarabun,Thonburi,Tahoma,sans-serif;font-weight:800;font-size:.86rem;background:#fff;border:1px solid #c5d9e4;border-radius:999px;padding:5px 12px;color:var(--deep);box-shadow:0 2px 8px rgba(0,0,0,.12);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;flex:1}
-#s45Lad{display:flex;align-items:center;justify-content:center;gap:4px;background:rgba(255,255,255,.94);border-radius:16px;padding:5px 8px;box-shadow:0 2px 8px rgba(0,0,0,.15);flex-shrink:0;position:relative;z-index:20}
+#s45Lad{display:flex;align-items:center;justify-content:center;gap:4px;background:rgba(255,255,255,.94);border-radius:16px;padding:5px 8px;box-shadow:0 2px 8px rgba(0,0,0,.15);flex-shrink:0;position:relative;z-index:20;width:100%;max-width:100%;box-sizing:border-box;overflow:hidden}
 .s45-chip{width:42px;height:42px;border-radius:12px;background:#e6f1f7;display:flex;align-items:center;justify-content:center;opacity:.45;position:relative;flex-shrink:0}
 .s45-chip img{max-width:34px;max-height:34px;display:block}
 .s45-chip.on{opacity:1;background:#fff2c9;box-shadow:0 0 0 3px #f4b942;transform:scale(1.08)}
@@ -1386,8 +1388,6 @@ body.anim-paused #startSwim .rays,body.anim-paused #startSwim .sbub,body.anim-pa
       </div>
       <div class="fb-rate-txt" id="fbRateTxt" style="color:#c83e4d">👆 กรุณาแตะเลือก 1–5 ดาวก่อนไปต่อ</div>
 
-      <label id="fbSchoolLbl" for="fbSchool" style="font-weight:600;display:block;margin-top:8px">🏫 โรงเรียน / หน่วยงาน (ไม่บังคับ)</label>
-      <input class="fb-input" id="fbSchool" maxlength="150" placeholder="พิมพ์ชื่อโรงเรียนหรือหน่วยงาน (เว้นว่างได้)" style="min-height:42px;margin-bottom:4px" oninput="onFbSchoolInput(this.value)">
       <label id="fbCommentLbl" for="fbComment" style="font-weight:600;display:block;margin-top:8px">💬 ข้อเสนอแนะ / ติชม (ไม่บังคับ)</label>
       <textarea class="fb-input" id="fbComment" maxlength="500" placeholder="พิมพ์ข้อเสนอแนะ คำติชม หรือความประทับใจของคุณ (เว้นว่างได้)..."></textarea>
       <input type="text" id="fbWebsite" name="fb_extra_note" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none">
@@ -1404,8 +1404,8 @@ body.anim-paused #startSwim .rays,body.anim-paused #startSwim .sbub,body.anim-pa
 <section class="view" id="viewCert">
   <div class="card">
     <h2 id="certHeading" style="margin-top:0;user-select:none;-webkit-user-select:none">🏅 เกียรติบัตรนักสำรวจโลกใต้น้ำ</h2>
-    <label id="certNameLbl" style="font-weight:600">ชื่อ-นามสกุล</label><input id="certName" placeholder="พิมพ์ชื่อ-นามสกุลของคุณ" oninput="onCertNameInput(this.value)">
-    <label id="certSchoolLbl" style="font-weight:600">โรงเรียน / หน่วยงาน</label><input id="certSchool" placeholder="พิมพ์ชื่อโรงเรียน (ไม่บังคับ)" oninput="onCertSchoolInput(this.value)">
+    <label id="certNameLbl" style="font-weight:600">ชื่อ-นามสกุล</label><input id="certName" placeholder="พิมพ์ชื่อ-นามสกุลของคุณ" oninput="if(window.S){S.name=this.value.trim();save();}drawCertificate()">
+    <label id="certSchoolLbl" style="font-weight:600">โรงเรียน / หน่วยงาน</label><input id="certSchool" placeholder="พิมพ์ชื่อโรงเรียน (ไม่บังคับ)" oninput="if(window.S){S.school=this.value.trim();save();}drawCertificate()">
     <button class="btn full" id="certUpdateBtn" onclick="drawCertificate()">✨ อัปเดตชื่อบนเกียรติบัตร</button>
     <div class="cert-preview-wrap">
       <canvas id="certCanvas" width="1600" height="1131"></canvas>
@@ -1782,7 +1782,7 @@ const STAGE_ORDER=[1,4,2,3,5,6,7];
 /* รหัสผ่านประจำลำดับด่าน 1–7 ชุดใหม่ (1 ด่าน ใช้ได้เฉพาะ 1 รหัสประจำด่านนั้นเท่านั้น) */
 const STAGE_CODES={1:'6384',2:'2759',3:'8146',4:'5923',5:'3478',6:'9615',7:'4832'};
 const STAGE_CATALOG={
- 1:{origId:1,icon:'🐟',art:'g1_parrot',zoneNum:1,defaultMax:12,passRate:0.5,
+ 1:{origId:1,icon:'🐟',art:'g1_parrot',zoneNum:1,defaultMax:10,passRate:0.5,
   zone:'โซนจากขุนเขาสู่สายน้ำ',zone_en:'Mountains to Rivers Zone',
   name:'มือปราบปลาเอเลี่ยน',name_en:'Alien Fish Buster',
   desc:'จิ้มเพื่อกำจัดปลาต่างถิ่น ห้ามโดนสัตว์น้ำไทย!',desc_en:'Tap invasive alien fish! Avoid native Thai fish!'},
@@ -1798,7 +1798,7 @@ const STAGE_CATALOG={
   zone:'โซนเปิดโลกใต้ทะเล',zone_en:'Underwater World Zone',
   name:'ห่วงโซ่อาหารและวิวัฒนาการ',name_en:'Food Chain & Evolution',
   desc:'พาร์ท 1 เรียงลำดับห่วงโซ่อาหาร ➔ พาร์ท 2 ว่ายน้ำวิวัฒนาการไต่ห่วงโซ่!',desc_en:'Part 1: Order the food chain ➔ Part 2: Swim & evolve up the food chain!'},
- 5:{origId:5,icon:'👆',art:'dolphin',zoneNum:3,defaultMax:7,passRate:0.6,
+ 5:{origId:5,icon:'👆',art:'dolphin',zoneNum:3,defaultMax:10,passRate:0.6,
   zone:'โซนเปิดโลกใต้ทะเล',zone_en:'Underwater World Zone',
   name:'จริงหรือมั่ว ชัวร์หรือไม่',name_en:'Ocean Fact or Myth?',
   desc:'ปัดการ์ดซ้าย-ขวา ข้อละ 11 วิ พิสูจน์ความเข้าใจผิดเรื่องทะเล',desc_en:'Swipe Left (Myth) or Right (Fact) within 11s on ocean & shark trivia'},
@@ -1951,7 +1951,6 @@ function load(){
       if(isExpired){
         sessionExpiredOnLoad=true;
         safeStorageRemove(KEY);
-        clearPlayerPdpaStorage();
       }else if(isValidOrder){
         const base=createDefaultState();
         base.name=typeof d.name==='string'?d.name.slice(0,100):'';
@@ -1998,49 +1997,16 @@ function save(){
     safeStorageSet(KEY,JSON.stringify(S));
   }catch(e){}
 }
-function closeAllModals(){
-  try{if(typeof stopQrScanner==='function') stopQrScanner();}catch(_){}
-  ['unlockModal','pauseModal','resetModal','nameModal','staffModal','qrAdminModal','feedbackReportModal'].forEach(id=>{
-    const m=document.getElementById(id);
-    if(m) m.classList.remove('show');
-  });
-}
-function clearPlayerPdpaStorage(){
-  try{safeStorageRemove('wk_fb_history_v1');}catch(_){}
-  try{safeStorageRemove('wk_fb_queue_v1');}catch(_){}
-  try{if(typeof cloudFeedbackCache!=='undefined') cloudFeedbackCache=[];}catch(_){}
-}
-function onCertNameInput(val){
-  const v=String(val||'').trim().slice(0,100);
-  if(S && typeof S==='object'){S.name=v;save();}
-  const nmEl=document.getElementById('nmName');if(nmEl) nmEl.value=v;
-  drawCertificate();
-}
-function onCertSchoolInput(val){
-  const v=String(val||'').trim().slice(0,150);
-  if(S && typeof S==='object'){S.school=v;save();}
-  const fsEl=document.getElementById('fbSchool');if(fsEl && fsEl.value!==val) fsEl.value=v;
-  drawCertificate();
-}
-function onFbSchoolInput(val){
-  const v=String(val||'').trim().slice(0,150);
-  if(S && typeof S==='object'){S.school=v;save();}
-  const csEl=document.getElementById('certSchool');if(csEl && csEl.value!==val) csEl.value=v;
-}
 function checkSessionExpiry(){
   try{
     if(!S || !S.updatedAt) return false;
     if((Date.now()-Number(S.updatedAt))>SESSION_TTL_MS){
-      stopGame();
-      closeAllModals();
       safeStorageRemove(KEY);
-      clearPlayerPdpaStorage();
       S=createDefaultState();
       staffAuthOk=false;
       curFbStar=0;
       const nmEl=document.getElementById('nmName');if(nmEl)nmEl.value='';
       const cmEl=document.getElementById('fbComment');if(cmEl)cmEl.value='';
-      const fsEl=document.getElementById('fbSchool');if(fsEl)fsEl.value='';
       const csEl=document.getElementById('certSchool');if(csEl)csEl.value='';
       const cnEl=document.getElementById('certName');if(cnEl)cnEl.value='';
       renderMap();renderStart();
@@ -2061,17 +2027,14 @@ function closeResetModal(){
 }
 function confirmResetAll(){
   sfx.tap();
-  stopGame();
-  closeAllModals();
+  document.getElementById('resetModal').classList.remove('show');
   staffAuthOk=false;
   curFbStar=0;
   const nmEl=document.getElementById('nmName');if(nmEl)nmEl.value='';
   const cmEl=document.getElementById('fbComment');if(cmEl)cmEl.value='';
-  const fsEl=document.getElementById('fbSchool');if(fsEl)fsEl.value='';
   const csEl=document.getElementById('certSchool');if(csEl)csEl.value='';
   const cnEl=document.getElementById('certName');if(cnEl)cnEl.value='';
   safeStorageRemove(KEY);
-  clearPlayerPdpaStorage();
   S=createDefaultState();
   save();
   renderMap();
@@ -2253,14 +2216,15 @@ function syncSndNoteLang(){
 
 // ธงชาติ SVG (อีโมจิธงไม่แสดงบน Windows จึงวาดเอง)
 const FLAG_TH='<svg viewBox="0 0 30 20" preserveAspectRatio="none"><rect width="30" height="20" fill="#A51931"/><rect y="3.33" width="30" height="13.34" fill="#fff"/><rect y="6.67" width="30" height="6.66" fill="#2D2A4A"/></svg>';
-const flagEnSvg=suf=>`<svg viewBox="0 0 60 30" preserveAspectRatio="none"><clipPath id="ukA_${suf}"><path d="M0 0v30h60V0z"/></clipPath><clipPath id="ukB_${suf}"><path d="M30 15h30v15zv15H0zH0V0zV0h30z"/></clipPath><g clip-path="url(#ukA_${suf})"><path d="M0 0v30h60V0z" fill="#012169"/><path d="M0 0l60 30m0-30L0 30" stroke="#fff" stroke-width="6"/><path d="M0 0l60 30m0-30L0 30" clip-path="url(#ukB_${suf})" stroke="#C8102E" stroke-width="4"/><path d="M30 0v30M0 15h60" stroke="#fff" stroke-width="10"/><path d="M30 0v30M0 15h60" stroke="#C8102E" stroke-width="6"/></g></svg>`;
+const FLAG_EN='<svg viewBox="0 0 60 30" preserveAspectRatio="none"><clipPath id="ukA"><path d="M0 0v30h60V0z"/></clipPath><clipPath id="ukB"><path d="M30 15h30v15zv15H0zH0V0zV0h30z"/></clipPath><g clip-path="url(#ukA)"><path d="M0 0v30h60V0z" fill="#012169"/><path d="M0 0l60 30m0-30L0 30" stroke="#fff" stroke-width="6"/><path d="M0 0l60 30m0-30L0 30" clip-path="url(#ukB)" stroke="#C8102E" stroke-width="4"/><path d="M30 0v30M0 15h60" stroke="#fff" stroke-width="10"/><path d="M30 0v30M0 15h60" stroke="#C8102E" stroke-width="6"/></g></svg>';
 function applyStaticLang(){
   document.documentElement.lang = LANG;
   document.title = L('WAGHOR AQUA QUEST ภารกิจพิชิตโลกใต้น้ำ · พิพิธภัณฑ์สัตว์น้ำหว้ากอ','WAGHOR AQUA QUEST: Underwater Adventure · Waghor Aquarium');
+  const langInner = `<span class="lg-opt${LANG==='th'?' on':''}"><i class="fl">${FLAG_TH}</i><b>TH</b></span><span class="lg-opt${LANG==='en'?' on':''}"><i class="fl">${FLAG_EN}</i><b>EN</b></span>`;
   ['langBtn','pauseLangBtn'].forEach(id=>{
     const b=document.getElementById(id);
     if(b){
-      b.innerHTML = `<span class="lg-opt${LANG==='th'?' on':''}"><i class="fl">${FLAG_TH}</i><b>TH</b></span><span class="lg-opt${LANG==='en'?' on':''}"><i class="fl">${flagEnSvg(id)}</i><b>EN</b></span>`;
+      b.innerHTML = langInner;
       b.setAttribute('aria-label',LANG==='th'?'Switch to English':'Switch to Thai');
     }
   });
@@ -2291,8 +2255,6 @@ function applyStaticLang(){
   setTxt('fbSubDesc','ยินดีด้วยที่ผ่านครบทั้ง 7 ด่าน! กรุณาให้คะแนนความพึงพอใจ 1–5 ดาว เพื่อเข้าสู่หน้ารับเกียรติบัตร','Congratulations on passing all 7 stages! Please tap 1–5 stars (rating required · written feedback optional) to proceed to your certificate.');
   setTxt('googleFormLinkBtn','📋 แบบประเมินความพึงพอใจ (Google Form) ↗','📋 Official Satisfaction Survey (Google Form) ↗');
   setHtml('fbStarLbl','⭐ ให้คะแนนความพึงพอใจ (1–5 ดาว) <span style="color:#d9384a">*</span>','⭐ Rate Your Satisfaction (1–5 Stars) <span style="color:#d9384a">*</span>');
-  setTxt('fbSchoolLbl','🏫 โรงเรียน / หน่วยงาน (ไม่บังคับ)','🏫 School / Organization (Optional)');
-  const fbs=document.getElementById('fbSchool');if(fbs)fbs.placeholder=L('พิมพ์ชื่อโรงเรียนหรือหน่วยงาน (เว้นว่างได้)','Enter your school or organization (optional)');
   setTxt('fbCommentLbl','💬 ข้อเสนอแนะ / ติชม (ไม่บังคับ)','💬 Suggestions & Feedback (Optional)');
   const fbc=document.getElementById('fbComment');if(fbc)fbc.placeholder=L('พิมพ์ข้อเสนอแนะ คำติชม หรือความประทับใจของคุณ (ไม่บังคับ เว้นว่างได้)...','Write your suggestions, comments, or favorite part of the aquarium (optional)...');
   setTxt('fbThanksBox','✅ ส่งคะแนนและข้อเสนอแนะเรียบร้อยแล้ว ขอบคุณมากครับ! 🙏','✅ Rating & feedback sent! Thank you so much! 🙏');
@@ -2409,10 +2371,7 @@ function syncThemeColor(viewId){
   if(m && m.getAttribute('content')!==col) m.setAttribute('content',col);
 }
 function go(id){
-  if((id==='viewCert' || id==='viewRate') && countCorePassed()<STAGES_DATA.length){
-    toast(L(`ต้องผ่านครบทั้ง ${STAGES_DATA.length} ด่านก่อนรับเกียรติบัตรนะ! (ผ่านแล้ว ${countCorePassed()}/${STAGES_DATA.length})`,`Please pass all ${STAGES_DATA.length} stages before claiming your certificate! (${countCorePassed()}/${STAGES_DATA.length} passed)`));
-    id='viewMap';
-  }else if(id==='viewCert' && !S.rated){
+  if(id==='viewCert' && !S.rated){
     id='viewRate';
   }
   syncThemeColor(id);
@@ -2428,12 +2387,9 @@ function go(id){
   syncStageLangVisibility();
   scrollTo(0,0);
   targetView.querySelectorAll('.inner-scroll-box,#stageList,.card').forEach(el=>{el.scrollTop=0});
-  if(id==='viewStart'){stopGame();closeAllModals();renderStart()}
   if(id==='viewMap'){stopGame();renderMap()}
   if(id==='viewRate'){
     stopGame();
-    const fsEl=document.getElementById('fbSchool');
-    if(fsEl && S.school && !fsEl.value) fsEl.value=S.school;
     if(S.fbStar && !curFbStar) curFbStar=S.fbStar;
     if(typeof updateFbStarLabel==='function') updateFbStarLabel();
   }
@@ -2633,19 +2589,6 @@ function buildQrV1M(text){
   mfns.forEach((mfn,mid)=>{const g=grid.map(r=>r.slice());for(let r=0;r<N;r++)for(let c=0;c<N;c++)if(!fn[r][c]&&mfn(r,c))g[r][c]^=1;af(g,mid);const s=pen(g);if(s<bp){bp=s;best=g}});
   return best;
 }
-function drawRoundRectPath(ctx,x,y,w,h,r){
-  if(typeof ctx.roundRect==='function'){
-    ctx.roundRect(x,y,w,h,r);
-    return;
-  }
-  const rad=Math.min(r,w/2,h/2);
-  ctx.moveTo(x+rad,y);
-  ctx.arcTo(x+w,y,x+w,y+h,rad);
-  ctx.arcTo(x+w,y+h,x,y+h,rad);
-  ctx.arcTo(x,y+h,x,y,rad);
-  ctx.arcTo(x,y,x+w,y,rad);
-  ctx.closePath();
-}
 function renderStageQrCanvas(stage, size=2000){
   const c=document.createElement('canvas');c.width=size;c.height=size;
   const ctx=c.getContext('2d');
@@ -2653,9 +2596,9 @@ function renderStageQrCanvas(stage, size=2000){
   const accent=zoneColors[stage.zoneNum]||'#2d6fb5';
   ctx.fillStyle='#ffffff';ctx.fillRect(0,0,size,size);
   ctx.strokeStyle=accent;ctx.lineWidth=size*0.012;
-  ctx.beginPath();drawRoundRectPath(ctx,size*0.02,size*0.02,size*0.96,size*0.96,size*0.04);ctx.stroke();
+  ctx.beginPath();ctx.roundRect(size*0.02,size*0.02,size*0.96,size*0.96,size*0.04);ctx.stroke();
   ctx.fillStyle=accent;
-  ctx.beginPath();drawRoundRectPath(ctx,size*0.18,size*0.048,size*0.64,size*0.055,size*0.028);ctx.fill();
+  ctx.beginPath();ctx.roundRect(size*0.18,size*0.048,size*0.64,size*0.055,size*0.028);ctx.fill();
   ctx.fillStyle='#ffffff';ctx.textAlign='center';ctx.textBaseline='middle';
   ctx.font=`800 ${Math.round(size*0.028)}px Prompt, Sarabun, sans-serif`;
   ctx.fillText(`WAGHOR AQUA QUEST · ด่านที่ ${stage.id} / STAGE ${stage.id}`,size/2,size*0.0755);
@@ -2669,7 +2612,7 @@ function renderStageQrCanvas(stage, size=2000){
   ctx.fillStyle='#0f2337';
   for(let r=0;r<21;r++)for(let c2=0;c2<21;c2++)if(qr[r][c2])ctx.fillRect(qx+c2*mod,qy+r*mod,mod,mod);
   ctx.fillStyle='#f0f8fb';ctx.strokeStyle=accent;ctx.lineWidth=size*0.0035;
-  ctx.beginPath();drawRoundRectPath(ctx,size*0.18,size*0.80,size*0.64,size*0.088,size*0.022);ctx.fill();ctx.stroke();
+  ctx.beginPath();ctx.roundRect(size*0.18,size*0.80,size*0.64,size*0.088,size*0.022);ctx.fill();ctx.stroke();
   ctx.fillStyle='#1d3a52';
   ctx.font=`800 ${Math.round(size*0.036)}px Prompt, Sarabun, sans-serif`;
   ctx.fillText(`รหัสสำรอง / PIN: ${stage.code}`,size/2,size*0.844);
@@ -2716,7 +2659,7 @@ function extractPinFromQr(raw){
   if(mUrl) return mUrl[1];
   const mExact=s.match(/^\D*(\d{4})\D*$/);
   if(mExact) return mExact[1];
-  const mAny=s.match(/\b(\d{4})\b/);
+  const mAny=s.match(/(\d{4})/);
   return mAny?mAny[1]:'';
 }
 
@@ -2742,7 +2685,6 @@ async function decodeQrFromSource(src, w, h, isPhoto=false){
       if(!qrDetector) qrDetector=new BarcodeDetector({formats:['qr_code']});
       const hits=await qrDetector.detect(src);
       if(hits && hits.length && hits[0].rawValue) return hits[0].rawValue;
-      if(!isPhoto) return '';
     }catch(_){}
   }
   const ok=await loadJsQrLib();
@@ -2768,22 +2710,9 @@ async function decodeQrFromSource(src, w, h, isPhoto=false){
   return out;
 }
 
-let qrLastBadAt=0;
-function handleDecodedQr(rawText, isPhoto=false){
+function handleDecodedQr(rawText){
   const pin=extractPinFromQr(rawText);
   if(!pin) return false;
-  const s=getStage(ulId);
-  const isMatch=Boolean(s && s.code && pin===s.code && isPrevStagePassed(ulId));
-  if(!isMatch){
-    const now=Date.now();
-    if(isPhoto || now-qrLastBadAt>1500){
-      qrLastBadAt=now;
-      const inp=document.getElementById('ulCode');
-      if(inp) inp.value=pin;
-      tryUnlock();
-    }
-    return false;
-  }
   const wrap=document.getElementById('qrScanWrap');
   if(wrap && wrap.classList.contains('on')){
     wrap.classList.add('ok');
@@ -2888,9 +2817,7 @@ async function handleQrPhotoFile(input){
     img.onload=async()=>{
       const raw=await decodeQrFromSource(img, img.naturalWidth||img.width, img.naturalHeight||img.height, true);
       URL.revokeObjectURL(url);
-      const pin=raw?extractPinFromQr(raw):'';
-      if(raw && pin){
-        handleDecodedQr(raw, true);
+      if(raw && handleDecodedQr(raw)){
         if(stEl) stEl.textContent='';
       }else{
         sfx.bad();
@@ -2979,7 +2906,7 @@ function unlockAllForDemo(){
 /* =========================================================================
    8. ระบบลากวาง (Drag & Drop + แตะเลือกวาง)
    ========================================================================= */
-function bindTouchDragDrop(containerEl, onDropPair, onSelectChange){
+function bindTouchDragDrop(containerEl, onDropPair){
   let activeDrag=null, ghost=null, selectedEl=null, sx=0, sy=0, moved=false;
 
   function clearGhost(){
@@ -2996,12 +2923,11 @@ function bindTouchDragDrop(containerEl, onDropPair, onSelectChange){
       containerEl.querySelectorAll('[data-drag-id]').forEach(x=>x.classList.remove('selected'));
       selectedEl=same?null:el;
       if(selectedEl){selectedEl.classList.add('selected');sfx.tap();}
-      if(typeof onSelectChange==='function') onSelectChange(selectedEl);
     };
 
     el.onpointerdown=e=>{
       activeDrag=el;sx=e.clientX;sy=e.clientY;moved=false;
-      try{el.setPointerCapture(e.pointerId);}catch(_){}
+      el.setPointerCapture(e.pointerId);
     };
     el.onpointermove=e=>{
       if(!activeDrag||activeDrag!==el)return;
@@ -3037,13 +2963,11 @@ function bindTouchDragDrop(containerEl, onDropPair, onSelectChange){
   });
 
   containerEl.querySelectorAll('[data-drop-id]').forEach(z=>{
-    z.onclick=e=>{
+    z.onclick=()=>{
       if(selectedEl){
-        if(e&&e.stopPropagation) e.stopPropagation();
         const dId=selectedEl.dataset.dragId;
         selectedEl.classList.remove('selected');
         selectedEl=null;
-        if(typeof onSelectChange==='function') onSelectChange(null);
         onDropPair(dId, z.dataset.dropId);
       }
     };
@@ -3082,13 +3006,9 @@ document.addEventListener('visibilitychange',()=>{
 
 function stopGame(){
   releaseWakeLock();
-  G.ended=true;
   G.timers.forEach(id=>{clearInterval(id);clearTimeout(id)});G.timers=[];
   if(G.cleanups){G.cleanups.forEach(fn=>{try{fn()}catch(e){}});G.cleanups=[]}
   cancelAnimationFrame(G.raf);G.paused=false;G.onLangChange=null;G.onPauseRender=null;
-  document.querySelectorAll('#floatingDragGhost').forEach(el=>el.remove());
-  const fxEl=document.getElementById('s45EvoFx');
-  if(fxEl){fxEl.style.opacity='';fxEl.style.pointerEvents='none';}
 }
 const root=()=>document.getElementById('gameRoot');
 
@@ -3199,8 +3119,7 @@ function finishStage(id,score,max,factSummary,reviewList=[]){
     }));
   }
   const st=S.stages[id], pct=max>0?Math.round((score/max)*100):0, pass=passOK(id,score,max), reqPct=Math.round(stagePassRate(id)*100);
-  if(max>0) st.max=max;
-  if(score>st.score){st.score=score}
+  if(score>st.score||!st.max){st.score=score;st.max=max}
   if(pass) st.passed=true;
   save();
   pass?sfx.win():sfx.lose();
@@ -3224,7 +3143,7 @@ function finishStage(id,score,max,factSummary,reviewList=[]){
     nextActionBtn = nextUnlocked
       ? `<button class="btn gold full" style="margin-bottom:10px" onclick="startStage(${nxt})">${L(`▶️ ไปเล่นด่านที่ ${nxt} ต่อเลย!`,`▶️ Play Stage ${nxt} Now!`)}</button>`
       : `<button class="btn gold full" style="margin-bottom:10px" onclick="go('viewMap');openUnlock(${nxt})">${L(`📷 สแกน QR ปลดล็อกด่านที่ ${nxt}`,`📷 Scan QR to Unlock Stage ${nxt}`)}</button>`;
-  }else if(pass && !nxt && countCorePassed()===STAGES_DATA.length){
+  }else if(pass && !nxt){
     nextActionBtn = `<button class="btn gold full" style="margin-bottom:10px" onclick="go('viewCert')">${L('🏅 ไปรับเกียรติบัตรนักสำรวจ!','🏅 Claim Explorer Certificate!')}</button>`;
   }
 
@@ -3289,7 +3208,7 @@ function game1(id){
     `🎯 <b>จิ้มตักปลาเอเลี่ยน</b> (โดยเฉพาะ <b>ปลาหมอคางดำ</b> ที่แพร่ระบาดหนัก รวมถึงปลาปากจระเข้ ปลาเปคู ปลานกแก้ว และปลาหางนกยูง) ให้ได้ <b>12 ตัว</b> ภายใน 35 วินาที!<br>⚠️ <b>ห้ามแตะปลาพื้นถิ่นไทย</b> (ปลาชะโด ปลาตะเพียน ปลากราย) จะถูกหักคะแนน!`,
     `🎯 <b>Tap to net 12 Invasive Alien Fish</b> (especially fast-spreading <b>Blackchin Tilapia</b>, plus Alligator Gar, Pacu, Parrot Cichlid, and Guppy) within 35 seconds!<br>⚠️ <b>Do NOT tap Native Thai Fish</b> (Giant Snakehead, Silver Barb, Clown Featherback) or you lose 1 point!`
   ),()=>{
-    stageBgm(BGM.s1);const TARGET=12;let caught=0,wrong=0,time=35,misses=0,pen=0,score=0,popLive=0;const spawnHist=[];const netNow=()=>score;
+    stageBgm(BGM.s1);const TARGET=12;let caught=0,wrong=0,time=35,misses=0,pen=0,popLive=0;const spawnHist=[];const netNow=()=>Math.max(0,caught-wrong-pen);
     const legendHTML=()=>`${ALIENS.map(a=>`<span>${renderSprite(a.k,a.e,a.h,24)} ${L(a.n,a.n_en)}</span>`).join('')}<span style="background:#ffe3e7;color:#9e1b32">🚫 ${L('ห้ามตัก (ปลาพื้นถิ่น):','Avoid Native Fish:')} ${NATIVES.map(n=>`${renderSprite(n.k,n.e,n.h,24)} ${L(n.short,n.short_en)}`).join(' · ')}</span>`;
     root().innerHTML=`<div class="hud"><b>⏱️ <span id="t">35</span>s</b><b id="s1NetLbl">🎯 ${L('ตักได้','Netted')} <span id="c">0</span>/${TARGET}</b>${pauseControlsHTML()}</div>
      <div class="arena-prog"><i id="s1Prog"></i></div>
@@ -3338,7 +3257,7 @@ function game1(id){
     function missTap(e){
       misses++;
       const hit3=misses%3===0;
-      if(hit3){pen++;score=Math.max(0,score-1);bumpCombo(false);sfx.bad();updateNet()}
+      if(hit3){pen++;bumpCombo(false);sfx.bad();updateNet()}
       if(popLive>=4)return;
       popLive++;
       const r=ar.getBoundingClientRect(),p=document.createElement('div');p.className='pop';
@@ -3403,10 +3322,10 @@ function game1(id){
       const W=ar.clientWidth||320;
       const p=document.createElement('div');p.className='pop';p.style.left=Math.max(12,Math.min(W-90,f.x+((f.t&&f.t.sz)||58)*0.3))+'px';p.style.top=f.y+'px';
       if(f.alien){
-        caught++;score=Math.min(TARGET,score+1);bumpCombo(true);sfx.ok();
+        caught++;bumpCombo(true);sfx.ok();
         p.textContent=`+1 ${G.combo>=2?`🔥x${G.combo}`:'✅'}`;p.style.color='#a7f3d0';
       }else{
-        wrong++;score=Math.max(0,score-1);bumpCombo(false);sfx.bad();
+        wrong++;bumpCombo(false);sfx.bad();
         p.textContent=L('สัตว์พื้นถิ่น! −1','Native Fish! −1');p.style.color='#fecdd3';
       }
       ar.appendChild(p);setTimeout(()=>p.remove(),800);
@@ -3680,7 +3599,7 @@ const FIRST_AID_CASES=[
 
 const AID_TOOLS=[
   {id:'vinegar',k:'aid_vinegar',ic:'🍶',name:'ราดน้ำส้มสายชู',name_en:'Pour Vinegar'},
-  {id:'hotwater',k:'aid_hotwater',ic:'♨️',name:'แช่น้ำอุ่นจัด 40–45°C',name_en:'Warm Water 40–45°C'},
+  {id:'hotwater',k:'aid_hotwater',ic:'♨️',name:'แช่น้ำอุ่นจัด 40–45°C',name_en:'Hot Water 40–45°C'},
   {id:'shuffle',k:'aid_shuffle',ic:'👣',name:'เดินลากเท้าไถทราย',name_en:'Shuffle Feet on Sand'},
   {id:'noeat',k:'aid_noeat',ic:'🚫',name:'ห้ามกินเด็ดขาด!',name_en:'Never Eat!'}
 ];
@@ -3709,7 +3628,7 @@ function game3(id){
       const c=FIRST_AID_CASES[idx];
       const qTxt=L(c.q,c.q_en), ansLbl=L(c.ansLabel,c.ansLabel_en), descTxt=L(c.desc,c.desc_en);
       root().innerHTML=`
-        <div class="hud"><b>🚑 ${L('เคสที่','Case')} ${idx+1}/${FIRST_AID_CASES.length}</b><b id="s3ScLbl">✅ ${L(`รักษาถูก ${score} เคส`,`Solved: ${score}`)}</b>${pauseControlsHTML()}</div>
+        <div class="hud"><b>🚑 ${L('เคสที่','Case')} ${idx+1}/${FIRST_AID_CASES.length}</b><b>✅ ${L(`รักษาถูก ${score} เคส`,`Solved: ${score}`)}</b>${pauseControlsHTML()}</div>
         <div class="inner-scroll-box" id="s3ScrollBox">
           <div style="background:#fff0f3;color:#b91c1c;border:2px solid #ff5d73;border-radius:14px;padding:8px 12px;font-size:.86rem;font-family:Prompt,Sarabun,Thonburi,Tahoma,sans-serif;font-weight:600;text-align:center;flex-shrink:0">${L('🏥 ความรู้ปฐมพยาบาลเบื้องต้น · หากถูกพิษรุนแรงต้องรีบไปพบแพทย์ที่โรงพยาบาลทันที','🏥 Basic First-Aid Guide · Always seek hospital care for severe symptoms')}</div>
           <div class="card" style="text-align:center;padding:12px;flex-shrink:0">
@@ -3757,7 +3676,7 @@ function game3(id){
           const ok=pickedTool===c.ans;
           btn.classList.add(ok?'correct':'wrong');
           if(!ok){const r=root().querySelector(`[data-tool="${c.ans}"]`);if(r)r.classList.add('correct')}
-          if(ok){score++;bumpCombo(true);sfx.ok();const scEl=document.getElementById('s3ScLbl');if(scEl)scEl.textContent=`✅ ${L(`รักษาถูก ${score} เคส`,`Solved: ${score}`)}`;toast(`${L('ถูกต้อง!','Correct!')} ${ansLbl} ✅`)}
+          if(ok){score++;bumpCombo(true);sfx.ok();toast(`${L('ถูกต้อง!','Correct!')} ${ansLbl} ✅`)}
           else{bumpCombo(false);sfx.bad();toast(`${L('ผิดวิธี! ต้องใช้','Incorrect! Use')} ${ansLbl} ❌`)}
           history.push({c,ok});
           showFeedbackBox(ok,true);
@@ -3923,7 +3842,6 @@ function game4(id){
         root().querySelectorAll('[data-slot-clear]').forEach(sl=>{
           sl.addEventListener('click', ()=>{
             if(G.paused||chainDone)return;
-            if(root().querySelector('[data-drag-id].selected'))return;
             const idx=+sl.dataset.slotClear;
             if(lockedSlots.has(idx))return;
             if(swapFromSlot!==null){
@@ -3960,11 +3878,6 @@ function game4(id){
           swapFromSlot=null;
           slotMap[slotIdx] = it;
           renderUI();
-        }, (selEl)=>{
-          if(selEl && swapFromSlot!==null){
-            swapFromSlot=null;
-            root().querySelectorAll('.slot-swap-sel').forEach(x=>x.classList.remove('slot-swap-sel'));
-          }
         });
       }
       G.onLangChange=()=>renderUI(chainDone);
@@ -4273,7 +4186,8 @@ function game4(id){
         const ladEl=document.getElementById('s45Lad');
         const barEl=document.getElementById('s45Bar');
         if(!wrap||!arena||!appEl)return;
-        const W=Math.max(260,Math.min((wrap.clientWidth||innerWidth-24),500));
+        const maxVisW=Math.max(260,Math.min(wrap.clientWidth||innerWidth-32, innerWidth-32, 500));
+        const W=maxVisW;
         const usedH=(topEl?topEl.offsetHeight:40)+(ladEl?ladEl.offsetHeight:54)+(barEl?barEl.offsetHeight:10)+(padWrap?padWrap.offsetHeight:114)+78;
         const availH=Math.max(170,Math.min(wrap.clientHeight||(innerHeight-usedH), innerHeight-usedH, 480));
         const H=Math.max(170,availH);
@@ -4348,7 +4262,7 @@ function game4(id){
         const P=E.P;P.lv=0;P.prog=0;P.inv=0;P.x=E.W/2;P.y=E.H*.74;P.tx=P.x;P.ty=P.y;P.face=1;P.el=null;P.jvx=0;P.jvy=0;
         E.clock=0;E.evoT=0;E.vig=0;
         const vigEl=document.getElementById('s45Vig');if(vigEl)vigEl.style.opacity=0;
-        const fxEl=document.getElementById('s45EvoFx');if(fxEl){fxEl.style.opacity='';fxEl.style.pointerEvents='none';fxEl.className='';fxEl.innerHTML=''}
+        const fxEl=document.getElementById('s45EvoFx');if(fxEl){fxEl.className='';fxEl.innerHTML=''}
         arena.querySelectorAll('.s45-ent').forEach(e=>e.remove());E.ents=[];
         setPlayerSprite();buildEnts();
         E.T=CFG.climbTime;E.Tmax=CFG.climbTime;
@@ -4357,7 +4271,7 @@ function game4(id){
         E.last=performance.now();
       }
       function endRound(why){
-        if(G.ended||(E.mode!=='play'&&E.mode!=='wait'))return;
+        if(E.mode!=='play'&&E.mode!=='wait')return;
         stopBGM();E.mode='end';E.vig=0;
         const vigEl=document.getElementById('s45Vig');if(vigEl)vigEl.style.opacity=0;
         const sc=Math.min(E.peak,3)+(E.apexEaten>=CFG.apexGoal?1:0);
@@ -4429,7 +4343,7 @@ function game4(id){
         sfxEat();pop(e.x,e.y,'+1');
         if(E.apex){
           E.apexEaten++;updateHUD();
-          if(E.apexEaten>=CFG.apexGoal){E.mode='wait';G.timers.push(setTimeout(()=>{if(!G.ended&&E.mode==='wait')endRound('apex')},650))}
+          if(E.apexEaten>=CFG.apexGoal){E.mode='wait';setTimeout(()=>endRound('apex'),650)}
           return;
         }
         P.prog++;
@@ -4545,7 +4459,7 @@ function game4(id){
           const dx=P.x-e.x,dy=P.y-e.y;
           if(dx*dx+dy*dy<rr*rr){
             if(e.kind==='pred'){if(P.inv<=0){hit(e,dx,dy);break}}
-            else{const prevLv=P.lv;eat(e);if(E.mode!=='play'||P.lv!==prevLv)break}
+            else{eat(e);if(E.mode!=='play')break}
           }
         }
       }
@@ -4750,7 +4664,6 @@ function game5(id){
 
       function answer(val){
         if(G.paused||card.dataset.done)return;card.dataset.done='1';
-        drag=false;dx=0;
         clearInterval(qTimer);
         curAns=val;timedOut=(val===null);
         if(stL) stL.style.opacity=0;if(stR) stR.style.opacity=0;
@@ -4803,7 +4716,7 @@ function game5(id){
       }
       card.onpointerdown=e=>{if(G.paused||card.dataset.done)return;drag=true;sx=e.clientX;dx=0;card.style.transition='none';try{card.setPointerCapture(e.pointerId)}catch(err){}};
       card.onpointermove=e=>{
-        if(!drag||G.paused||G.ended||card.dataset.done)return;
+        if(!drag)return;
         dx=e.clientX-sx;
         card.style.transform=`translateX(${dx}px) rotate(${dx*.05}deg)`;
         card.style.borderColor = dx<-40 ? '#ee9aa7' : dx>40 ? '#7fcfa0' : '';
@@ -4811,8 +4724,7 @@ function game5(id){
         if(stR) stR.style.opacity = dx>20 ? Math.min(1,(dx-20)/50) : 0;
       };
       card.onpointerup=()=>{
-        if(!drag||card.dataset.done){drag=false;return;}
-        drag=false;card.style.transition='transform .22s';
+        if(!drag)return;drag=false;card.style.transition='transform .22s';
         if(stL) stL.style.opacity=0;if(stR) stR.style.opacity=0;
         if(dx<-55){answer(false)}
         else if(dx>55){answer(true)}
@@ -4959,7 +4871,6 @@ function game6(id){
       function submit(choseTrue){
         if(G.paused||answered)return;
         answered=true;
-        drag=false;dx=0;
         clearInterval(qTimer);
         if(stL) stL.style.opacity=0;if(stR) stR.style.opacity=0;
         const aName=L(a.name,a.name_en), aDesc=L(a.desc,a.desc_en);
@@ -5027,7 +4938,7 @@ function game6(id){
       }
       card.onpointerdown=e=>{if(G.paused||answered)return;drag=true;sx=e.clientX;dx=0;card.style.transition='none';try{card.setPointerCapture(e.pointerId)}catch(err){}};
       card.onpointermove=e=>{
-        if(!drag||G.paused||G.ended||answered)return;
+        if(!drag)return;
         dx=e.clientX-sx;
         card.style.transform=`translateX(${dx}px) rotate(${dx*.05}deg)`;
         card.style.borderColor = dx<-40 ? '#ee9aa7' : dx>40 ? '#7fcfa0' : '';
@@ -5035,8 +4946,7 @@ function game6(id){
         if(stR) stR.style.opacity = dx>20 ? Math.min(1,(dx-20)/50) : 0;
       };
       card.onpointerup=()=>{
-        if(!drag||answered){drag=false;return;}
-        drag=false;card.style.transition='transform .22s';
+        if(!drag)return;drag=false;card.style.transition='transform .22s';
         if(stL) stL.style.opacity=0;if(stR) stR.style.opacity=0;
         if(dx<-55){submit(false)}
         else if(dx>55){submit(true)}
@@ -5129,8 +5039,7 @@ function game7(id){
   s7GameCss();
   const startS7Game=()=>{
     const TOTAL=S7_ITEMS.length, LIVES=5, TIME=110;
-    const spdScale=Math.max(0.4,Math.min(2,(Number(TURTLE_SPEED_LEVEL)||5.5)/5.5));
-    const BASE=42*spdScale, STEP=6.8*spdScale;
+    const BASE=42, STEP=6.8;
     const MAXFLOAT=3;
     const SPAWN_MS=3000;
     const TURTLE_FACES_LEFT=true;
@@ -5338,7 +5247,7 @@ function game7(id){
       do{x=lo+Math.random()*(hi-lo);y=lo2+Math.random()*(hi2-lo2);n++}while(Math.hypot(x-turtle.x,y-turtle.y)<145*K&&n<16);
       const o={d,el,x,y,vx:rv(),vy:rv(),ph:Math.random()*6,held:false,gone:false,tries:0,pid:null};
       el.addEventListener('pointerdown',ev=>{
-        if(ended||G.ended||G.paused||o.gone||o.held)return;ev.preventDefault();
+        if(ended||G.ended||o.gone||o.held)return;ev.preventDefault();
         updateBinRects();
         o.held=true;o.pid=ev.pointerId;el.classList.add('held');
         try{el.setPointerCapture(ev.pointerId)}catch(e){}
@@ -5406,7 +5315,7 @@ function game7(id){
         o.el.classList.add('sink');setTimeout(()=>o.el.remove(),300);
         hud();
         if(sorted>=TOTAL) addPauseTimeout(endGame,600);
-        else if(items.filter(x=>!x.gone).length===0) addPauseTimeout(spawnItem,400);
+        else if(items.filter(x=>!x.gone).length===0) setTimeout(spawnItem,400);
       }else{
         o.tries++;bumpCombo(false);sfx.bad();flash(b,'shake');pop(L('ผิดหมวด ✖','Wrong Bin ✖'),o.x,o.y,'#ffd1d8');toWater(o);
       }
@@ -5753,10 +5662,10 @@ let cloudFeedbackCache=[]; // เก็บเฉพาะในหน่วย�
 let fbSubmitting=false;
 
 function getActiveWebhookUrl(){
-  return (safeStorageGet('wk_admin_webhook_url') || SURVEY_CONFIG.sheetWebhookUrl || '').trim();
+  return (SURVEY_CONFIG.sheetWebhookUrl || safeStorageGet('wk_admin_webhook_url') || '').trim();
 }
 function getActiveSheetViewUrl(){
-  return (safeStorageGet('wk_admin_sheet_url') || SURVEY_CONFIG.sheetViewUrl || '').trim();
+  return (SURVEY_CONFIG.sheetViewUrl || safeStorageGet('wk_admin_sheet_url') || '').trim();
 }
 
 function getStarRatingLabel(v){
@@ -5899,11 +5808,7 @@ async function submitPlayerFeedback(){
   const cmEl=document.getElementById('fbComment');
   const comment=(cmEl?cmEl.value:'').trim().slice(0,FB_MAX_COMMENT);
   const name=((document.getElementById('certName')&&document.getElementById('certName').value.trim())||S.name||L('นักสำรวจรุ่นเยาว์','Young Marine Explorer')).slice(0,100);
-  const school=((document.getElementById('fbSchool')&&document.getElementById('fbSchool').value.trim())||(document.getElementById('certSchool')&&document.getElementById('certSchool').value.trim())||S.school||'').slice(0,150);
-  if(school){
-    S.school=school;
-    const csEl=document.getElementById('certSchool');if(csEl&&!csEl.value.trim())csEl.value=school;
-  }
+  const school=((document.getElementById('certSchool')&&document.getElementById('certSchool').value.trim())||'').slice(0,150);
   const tot=STAGES_DATA.reduce((a,s)=>a+S.stages[s.id].score,0);
   const now=new Date();
   const yyyy=now.getFullYear();
@@ -5937,10 +5842,15 @@ async function submitPlayerFeedback(){
     btn.textContent=L('⏳ กำลังบันทึกคะแนนและเปิดหน้าเกียรติบัตร...','⏳ Saving rating & opening certificate...');
   }
 
-  // บันทึกลงประวัติในเครื่องและคิวส่งข้อมูล แล้วส่งผ่านคิวเดียว (flushFbQueue) เพื่อป้องกันการยิง POST ซ้ำ
+  // บันทึกลงประวัติในเครื่องและคิวส่งข้อมูล เพื่อให้หน้ากราฟแสดงผลได้ทันทีแม้สคริปต์ฝั่ง Sheet ยังไม่ได้อัปเดตเวอร์ชัน
   fbSaveHistoryItem(entry);
   const q=fbReadQueue();q.push(entry);fbWriteQueue(q);
-  flushFbQueue();
+  fbPostEntry(entry).then(ok=>{
+    if(ok){
+      fbWriteQueue(fbReadQueue().filter(x=>x.id!==entry.id));
+      flushFbQueue();
+    }
+  }).catch(()=>{});
 
   fbSubmitting=false;
   lastFbSentAt=Date.now();
@@ -6490,13 +6400,11 @@ function fallbackCopy(text){
     const s=document.createElement('div');s.className='stamp';
     s.innerHTML=L('✓ ผ่านด่านที่ '+id+'<small>พิพิธภัณฑ์สัตว์น้ำหว้ากอ</small>','✓ STAGE '+id+' PASSED<small>Waghor Aquarium</small>');
     c.appendChild(s);
-    const stampTm=setTimeout(()=>{
-      if(!document.contains(c)||!document.contains(s))return;
+    setTimeout(()=>{
       sfx.stamp();fx.vib(60);c.classList.add('thump');setTimeout(()=>c.classList.remove('thump'),320);
       const r=s.getBoundingClientRect();
       fx.burst(r.left+r.width/2,r.top+r.height/2,28,['🫧','🎉','⭐','💙','🎊'],170,1.6,300);
     },540);
-    G.timers.push(stampTm);
   };
 })();
 
@@ -6508,7 +6416,6 @@ if(S.name){
 }
 if(S.school){
   const csEl=document.getElementById('certSchool');if(csEl)csEl.value=S.school;
-  const fsEl=document.getElementById('fbSchool');if(fsEl)fsEl.value=S.school;
 }
 if(S.fbStar){
   curFbStar=S.fbStar;
@@ -6550,9 +6457,10 @@ if(document.fonts){
     }).catch(()=>{});
   }catch(_){}
 }
-/* ปิดการซูมด้วยนิ้ว (pinch) — double-tap zoom ปิดผ่าน CSS touch-action: manipulation แล้ว */
+/* ปิดการซูมด้วยนิ้ว (pinch / double-tap) */
 ['gesturestart','gesturechange','gestureend'].forEach(ev=>document.addEventListener(ev,e=>e.preventDefault(),{passive:false}));
 document.addEventListener('touchmove',e=>{if(e.touches&&e.touches.length>1)e.preventDefault()},{passive:false});
+(function(){let lt=0;document.addEventListener('touchend',e=>{const n=Date.now();if(n-lt<300&&!(e.target.closest&&e.target.closest('input,textarea')))e.preventDefault();lt=n},{passive:false})})();
 window.addEventListener('beforeunload',e=>{
   if(document.getElementById('viewGame').classList.contains('active') && !G.ended){
     e.preventDefault();
@@ -6742,19 +6650,11 @@ try{
   const qPin=(qp.get('pin')||qp.get('unlock')||'').trim();
   if(/^\d{4}$/.test(qPin)){
     const targetSt=STAGES_DATA.find(x=>x.code===qPin);
-    history.replaceState(null,'',location.pathname);
-    if(targetSt){
-      if(isPrevStagePassed(targetSt.id)){
-        S.stages[targetSt.id].unlocked=true;
-        save();
-        setTimeout(()=>{go('viewMap');startStage(targetSt.id);},250);
-      }else{
-        const reqId=getPrevStageId(targetSt.id);
-        setTimeout(()=>{
-          go('viewMap');
-          toast(L(`ต้องผ่านด่านที่ ${reqId} ก่อนจึงจะปลดล็อกด่านที่ ${targetSt.id} ได้นะ!`,`Please pass Stage ${reqId} first before unlocking Stage ${targetSt.id}!`));
-        },250);
-      }
+    if(targetSt && isPrevStagePassed(targetSt.id)){
+      S.stages[targetSt.id].unlocked=true;
+      save();
+      history.replaceState(null,'',location.pathname);
+      setTimeout(()=>{go('viewMap');startStage(targetSt.id);},250);
     }
   }
 }catch(_){}
